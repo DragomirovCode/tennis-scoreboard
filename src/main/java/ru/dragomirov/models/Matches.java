@@ -29,6 +29,9 @@ public class Matches {
 
     public Matches() {}
 
-
-
+    public Matches(Players player1, Players player2, Players winner) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.winner = winner;
+    }
 }
