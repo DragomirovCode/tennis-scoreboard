@@ -20,6 +20,16 @@ public class PlayersDAO implements PlayersRepository {
     }
 
     @Override
+    public Players findByName(String name) {
+        return HibernateSessionManager.performSessionQuery(session ->
+                        session.createQuery("FROM Players WHERE name = :name", Players.class)
+                                .setParameter("name", name)
+                                .uniqueResult(),
+                "Произошла ошибка при выполнении метода 'findByName'"
+        );
+    }
+
+    @Override
     public void save(Players player) {
         HibernateSessionManager.performTransaction(session -> session.save(player));
     }
