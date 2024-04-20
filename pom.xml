@@ -7,10 +7,12 @@
     <groupId>ru.dragomirov</groupId>
     <artifactId>tennis-scoreboard</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>tennis-scoreboard</name>
+    <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <h2.version>2.1.214</h2.version>
         <hibernate.version>5.4.10.Final</hibernate.version>
@@ -55,4 +57,14 @@
             <version>${gson.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
