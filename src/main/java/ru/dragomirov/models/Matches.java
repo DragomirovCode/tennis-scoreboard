@@ -29,9 +29,21 @@ public class Matches {
 
     public Matches() {}
 
+    @Transient
+    private Score score;
+
     public Matches(Players player1, Players player2, Players winner) {
         this.player1 = player1;
         this.player2 = player2;
         this.winner = winner;
+        this.score = new Score(player1, player2);
+    }
+
+    public void player1WonPoint(){
+        score.incrementScore(player1);
+    }
+
+    public void player2WonPoint(){
+        score.incrementScore(player2);
     }
 }
