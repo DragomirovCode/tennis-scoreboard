@@ -59,8 +59,7 @@ public class newMatchPageServlet extends BaseServlet {
             Matches match = new Matches(player1, player2, null);
             matchesDAO.save(match);
 
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.getWriter().write("Новый матч успешно создан.");
+            resp.sendRedirect("/match-score?uuid=" + match.getId());
         } catch (Exception e) {
             http500Errors(resp, e, "Ошибка при создании матча.");
         }
