@@ -56,7 +56,7 @@ public class newMatchPageServlet extends BaseServlet {
                 playersDAO.save(player2);
             }
 
-            Matches match = new Matches(player1, player2, null);
+            Matches match = new Matches(player1, player2);
             matchesDAO.save(match);
 
             resp.sendRedirect("/match-score?uuid=" + match.getId());
