@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="match" scope="request" type="ru.dragomirov.models.Matches" />
+<jsp:useBean id="match" scope="request" type="ru.dragomirov.entities.Matches" />
 <html>
 <head>
     <title>Счет Матча</title>

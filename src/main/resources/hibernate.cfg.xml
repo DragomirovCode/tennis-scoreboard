@@ -22,7 +22,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!-- Mapping -->
-        <mapping class="ru.dragomirov.models.Players"/>
-        <mapping class="ru.dragomirov.models.Matches"/>
+        <mapping class="ru.dragomirov.entities.Players"/>
+        <mapping class="ru.dragomirov.entities.Matches"/>
     </session-factory>
 </hibernate-configuration>

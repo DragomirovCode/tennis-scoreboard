@@ -1,7 +1,7 @@
 package ru.dragomirov.dao;
 
 import ru.dragomirov.commons.HibernateSessionManager;
-import ru.dragomirov.models.Matches;
+import ru.dragomirov.entities.Matches;
 import ru.dragomirov.repositories.MatchesRepository;
 
 import java.util.List;

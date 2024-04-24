@@ -1,6 +1,6 @@
 package ru.dragomirov.repositories;
 
-import ru.dragomirov.models.Matches;
+import ru.dragomirov.entities.Matches;
 
 import java.util.List;
 

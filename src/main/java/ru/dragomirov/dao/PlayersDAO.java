@@ -1,6 +1,6 @@
 package ru.dragomirov.dao;
 
-import ru.dragomirov.models.Players;
+import ru.dragomirov.entities.Players;
 import ru.dragomirov.repositories.PlayersRepository;
 import ru.dragomirov.commons.HibernateSessionManager;
 

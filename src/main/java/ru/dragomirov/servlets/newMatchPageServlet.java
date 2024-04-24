@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.commons.BaseServlet;
 import ru.dragomirov.dao.MatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
-import ru.dragomirov.models.Matches;
-import ru.dragomirov.models.Players;
+import ru.dragomirov.entities.Matches;
+import ru.dragomirov.entities.Players;
 
 import java.io.IOException;
 

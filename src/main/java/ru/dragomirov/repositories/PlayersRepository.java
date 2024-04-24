@@ -1,6 +1,6 @@
 package ru.dragomirov.repositories;
 
-import ru.dragomirov.models.Players;
+import ru.dragomirov.entities.Players;
 
 import java.util.List;
 
