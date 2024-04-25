@@ -59,7 +59,8 @@ public class MatchesService {
         }
     }
 
-    public int getPlayerScore(PlayersDTO player) {
-        return player.getScore();
+    public void winGame(PlayersDTO player) {
+        player.setScore(0);
+        player.setAdvantage(false);
     }
 }
