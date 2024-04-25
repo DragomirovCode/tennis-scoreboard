@@ -4,17 +4,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.commons.BaseServlet;
-import ru.dragomirov.dto.CreateMatchesDTOFactory;
 import ru.dragomirov.dto.MatchesDTO;
+import ru.dragomirov.services.MatchesService;
 
 import java.io.IOException;
 
 @WebServlet(name = "matchScoreServlet", urlPatterns = "/match-score")
 public class matchScoreServlet extends BaseServlet {
-    private CreateMatchesDTOFactory factory;
+    private MatchesService matchesService;
     @Override
     public void init() {
-        factory = new CreateMatchesDTOFactory();
+        matchesService = new MatchesService();
     }
 
     @Override
@@ -90,10 +90,10 @@ public class matchScoreServlet extends BaseServlet {
             // Обработка действия
             switch (action) {
                 case "player1_won_point":
-                    factory.addPointsToPlayers(match.getPlayer1());
+                    matchesService.addPointsToPlayers(match.getPlayer1());
                     break;
                 case "player2_won_point":
-                    factory.addPointsToPlayers(match.getPlayer2());
+                    matchesService.addPointsToPlayers(match.getPlayer2());
                     break;
                 default:
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
