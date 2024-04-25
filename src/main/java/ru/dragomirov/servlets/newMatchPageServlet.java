@@ -4,18 +4,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.commons.BaseServlet;
-import ru.dragomirov.dto.CreateMatchesDTOFactory;
+import ru.dragomirov.dto.MatchesDTOFactory;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
 import java.io.IOException;
 
 @WebServlet(name = "newMatchPageServlet", urlPatterns = "/new-match")
 public class newMatchPageServlet extends BaseServlet {
-    private CreateMatchesDTOFactory factory;
+    private MatchesDTOFactory factory;
 
     @Override
     public void init() {
-        factory = new CreateMatchesDTOFactory();
+        factory = new MatchesDTOFactory();
     }
 
     @Override
