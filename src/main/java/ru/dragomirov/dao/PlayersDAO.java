@@ -1,5 +1,6 @@
 package ru.dragomirov.dao;
 
+import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Players;
 import ru.dragomirov.repositories.PlayersRepository;
 import ru.dragomirov.commons.HibernateSessionManager;
@@ -42,5 +43,19 @@ public class PlayersDAO implements PlayersRepository {
     @Override
     public void delete(Players player) {
         HibernateSessionManager.performTransaction(session -> session.delete(player));
+    }
+
+    public PlayersDTO toDTO(Players player) {
+        PlayersDTO dto = new PlayersDTO();
+        dto.setId(player.getId());
+        dto.setName(player.getName());
+        return dto;
+    }
+
+    public Players toEntity(PlayersDTO dto) {
+        Players player = new Players();
+        player.setId(dto.getId());
+        player.setName(dto.getName());
+        return player;
     }
 }
