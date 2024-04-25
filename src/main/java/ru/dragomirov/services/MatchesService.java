@@ -3,9 +3,31 @@ package ru.dragomirov.services;
 import ru.dragomirov.dto.PlayersDTO;
 
 public class MatchesService {
-    public void addPointsToPlayers(PlayersDTO player) {
+    public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
         int currentScore = player.getScore();
-        int additionalPoints = 0;
+
+        if (currentScore == 40 && opponent.getScore() < 40) {
+            player.setGamesWon(calculateAdditionalWin(player.getGamesWon()));
+            winGame(player);
+            return;
+        }
+
+        if (isDeuce(player, opponent)) {
+            if (player.isAdvantage()) {
+                winGame(player);
+            } else {
+                player.setAdvantage(true);
+            }
+            return;
+        }
+
+        if (player.isAdvantage()) {
+            winGame(player);
+        } else {
+            int additionalPoints = calculateAdditionalPoints(currentScore);
+            player.setScore(additionalPoints);
+        }
+    }
 
         switch (currentScore) {
             case 0:
