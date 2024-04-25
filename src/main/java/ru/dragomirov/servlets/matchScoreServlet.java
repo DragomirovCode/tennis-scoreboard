@@ -52,4 +52,60 @@ public class matchScoreServlet extends BaseServlet {
             http500Errors(resp, e, "Ошибка при загрузке страницы.");
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            // Получаем идентификатор матча
+            String uuidStr = req.getParameter("uuid");
+            if (uuidStr == null) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("Ошибка: параметр uuid отсутствует.");
+                return;
+            }
+
+            // Извлекаем идентификатор и действие
+            int matchId = Integer.parseInt(uuidStr);
+            String action = req.getParameter("action");
+
+            if (action == null) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("Ошибка: параметр 'action' отсутствует.");
+                return;
+            }
+
+            // Получаем объект матча из сессии
+            MatchesDTO match = (MatchesDTO) req.getSession().getAttribute("match");
+
+            if (match == null || match.getId() != matchId) {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.getWriter().write("Ошибка: матч не найден.");
+                return;
+            }
+
+            // Обработка действия
+            switch (action) {
+                case "player1_won_point":
+                    match.getPlayer1().setScore(1); // Увеличиваем счёт игрока 1
+                    break;
+                case "player2_won_point":
+                    match.getPlayer2().setScore(1); // Увеличиваем счёт игрока 2
+                    break;
+                default:
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    resp.getWriter().write("Ошибка: неизвестное действие.");
+                    return;
+            }
+
+            // Сохраняем изменения в сессии и отправляем успешный ответ
+            req.getSession().setAttribute("match", match);
+
+            // Редирект с использованием идентификатора матча
+            resp.sendRedirect("/match-score?uuid=" + match.getId());
+        } catch (Exception e) {
+            // В случае ошибки
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().write("Ошибка при обработке запроса.");
+        }
+    }
 }
