@@ -9,6 +9,5 @@ public class MatchesDTO {
     private int id;
     private PlayersDTO player1;
     private PlayersDTO player2;
-    private String score;
     private PlayersDTO winner;
 }
