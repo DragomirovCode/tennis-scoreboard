@@ -4,22 +4,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.commons.BaseServlet;
-import ru.dragomirov.dao.MatchesDAO;
-import ru.dragomirov.dao.PlayersDAO;
-import ru.dragomirov.entities.Matches;
-import ru.dragomirov.entities.Players;
-
+import ru.dragomirov.dto.CreateMatchesDTOFactory;
+import ru.dragomirov.dto.MatchesDTO;
+import ru.dragomirov.dto.PlayersDTO;
 import java.io.IOException;
 
 @WebServlet(name = "newMatchPageServlet", urlPatterns = "/new-match")
 public class newMatchPageServlet extends BaseServlet {
-    private MatchesDAO matchesDAO;
-    private PlayersDAO playersDAO;
+    private CreateMatchesDTOFactory factory;
 
     @Override
     public void init() {
-        matchesDAO = new MatchesDAO();
-        playersDAO = new PlayersDAO();
+        factory = new CreateMatchesDTOFactory();
     }
 
     @Override
@@ -44,21 +40,18 @@ public class newMatchPageServlet extends BaseServlet {
                 return;
             }
 
-            Players player1 = playersDAO.findByName(player1Name);
-            if (player1 == null) {
-                player1 = new Players(player1Name);
-                playersDAO.save(player1);
-            }
+            PlayersDTO player1DTO = new PlayersDTO();
+            player1DTO.setName(player1Name);
 
-            Players player2 = playersDAO.findByName(player2Name);
-            if (player2 == null) {
-                player2 = new Players(player2Name);
-                playersDAO.save(player2);
-            }
+            PlayersDTO player2DTO = new PlayersDTO();
+            player2DTO.setName(player2Name);
 
-            Matches match = new Matches(player1, player2);
-            matchesDAO.save(match);
+            MatchesDTO match = factory.createMatches(player1DTO, player2DTO, "0-0");
 
+            // Сохранение в сессии
+            req.getSession().setAttribute("match", match);
+
+            // Редирект с использованием идентификатора матча
             resp.sendRedirect("/match-score?uuid=" + match.getId());
         } catch (Exception e) {
             http500Errors(resp, e, "Ошибка при создании матча.");
