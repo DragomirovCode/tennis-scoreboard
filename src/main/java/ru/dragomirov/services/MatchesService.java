@@ -46,7 +46,17 @@ public class MatchesService {
         }
     }
 
-        player.setScore(additionalPoints);
+    private int calculateAdditionalWin(int countScore) {
+        switch (countScore) {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 3;
+            default:
+                return 0;
+        }
     }
 
     public int getPlayerScore(PlayersDTO player) {
