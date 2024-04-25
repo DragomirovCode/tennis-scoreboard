@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="match" scope="request" type="ru.dragomirov.entities.Matches" />
+<jsp:useBean id="match" scope="request" type="ru.dragomirov.dto.MatchesDTO" />
 <html>
 <head>
     <title>Счет Матча</title>
@@ -10,11 +10,12 @@
 <table border="1">
     <tr>
         <th>Игрок</th>
-        <th>Счет</th>
+        <th>Счёт</th>
+        <th>Действие</th>
     </tr>
     <tr>
         <td>${match.player1.name}</td>
-        <td>${match.score.getPoints(match.player1)}</td>
+        <td>${match.player1.score}</td> <!-- Отображение счёта -->
         <td>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player1_won_point">
@@ -24,7 +25,7 @@
     </tr>
     <tr>
         <td>${match.player2.name}</td>
-        <td>${match.score.getPoints(match.player1)}</td>
+        <td>${match.player2.score}</td> <!-- Отображение счёта -->
         <td>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player2_won_point">
