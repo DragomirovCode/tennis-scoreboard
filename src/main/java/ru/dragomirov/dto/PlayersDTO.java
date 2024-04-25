@@ -8,4 +8,5 @@ import lombok.Setter;
 public class PlayersDTO {
     private int id;
     private String name;
+    private int score;
 }
