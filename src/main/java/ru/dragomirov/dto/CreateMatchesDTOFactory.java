@@ -10,14 +10,23 @@ public class CreateMatchesDTOFactory {
         return matches;
     }
 
-    public void addPointsToPlayers1(PlayersDTO player1) {
-        int currentScore = player1.getScore();
-        player1.setScore(currentScore + 1);
-    }
+    public void addPointsToPlayers(PlayersDTO player) {
+        int currentScore = player.getScore();
+        int additionalPoints = 0;
 
-    public void addPointsToPlayers2(PlayersDTO player2) {
-        int currentScore = player2.getScore();
-        player2.setScore(currentScore + 1);
+        switch (currentScore) {
+            case 0:
+                additionalPoints = 15;
+                break;
+            case 15:
+                additionalPoints = 30;
+                break;
+            case 30:
+                additionalPoints = 40;
+                break;
+        }
+
+        player.setScore(additionalPoints);
     }
 
     public int getPlayerScore(PlayersDTO player) {
