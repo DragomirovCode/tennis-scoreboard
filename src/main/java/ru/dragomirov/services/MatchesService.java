@@ -5,14 +5,14 @@ import ru.dragomirov.dto.PlayersDTO;
 public class MatchesService {
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
         if (player.getScore() == 40 && opponent.getScore() < 40) {
-            player.setGamesWon(calculateAdditionalWin(player.getGamesWon()));
-            winGame(player);
+            player.setGamesWon(getNextGameCount(player.getGamesWon()));
+            resetAfterWinning(player);
             return;
         }
 
         if (isDeuce(player, opponent)) {
             if (player.isAdvantage()) {
-                winGame(player);
+                resetAfterWinning(player);
             } else {
                 player.setAdvantage(true);
             }
@@ -20,9 +20,9 @@ public class MatchesService {
         }
 
         if (player.isAdvantage()) {
-            winGame(player);
+            resetAfterWinning(player);
         } else {
-            int additionalPoints = calculateAdditionalPoints(player.getScore());
+            int additionalPoints = getNextPoint(player.getScore());
             player.setScore(additionalPoints);
         }
     }
@@ -31,7 +31,7 @@ public class MatchesService {
         return player.getScore() == 40 && opponent.getScore() == 40 && !player.isAdvantage() && !opponent.isAdvantage();
     }
 
-    private int calculateAdditionalPoints(int currentPoints) {
+    private int getNextPoint(int currentPoints) {
         switch (currentPoints) {
             case 0:
                 return 15;
@@ -44,7 +44,7 @@ public class MatchesService {
         }
     }
 
-    private int calculateAdditionalWin(int countScore) {
+    private int getNextGameCount(int countScore) {
         switch (countScore) {
             case 0:
                 return 1;
@@ -57,7 +57,7 @@ public class MatchesService {
         }
     }
 
-    public void winGame(PlayersDTO player) {
+    public void resetAfterWinning(PlayersDTO player) {
         player.setScore(0);
         player.setAdvantage(false);
     }
