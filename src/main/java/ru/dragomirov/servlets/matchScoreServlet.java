@@ -4,14 +4,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.commons.BaseServlet;
+import ru.dragomirov.dto.CreateMatchesDTOFactory;
 import ru.dragomirov.dto.MatchesDTO;
 
 import java.io.IOException;
 
 @WebServlet(name = "matchScoreServlet", urlPatterns = "/match-score")
 public class matchScoreServlet extends BaseServlet {
+    private CreateMatchesDTOFactory factory;
     @Override
-    public void init() {}
+    public void init() {
+        factory = new CreateMatchesDTOFactory();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -86,10 +90,10 @@ public class matchScoreServlet extends BaseServlet {
             // Обработка действия
             switch (action) {
                 case "player1_won_point":
-                    match.getPlayer1().setScore(1); // Увеличиваем счёт игрока 1
+                    factory.addPointsToPlayers(match.getPlayer1());
                     break;
                 case "player2_won_point":
-                    match.getPlayer2().setScore(1); // Увеличиваем счёт игрока 2
+                    factory.addPointsToPlayers(match.getPlayer2());
                     break;
                 default:
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
