@@ -4,9 +4,7 @@ import ru.dragomirov.dto.PlayersDTO;
 
 public class MatchesService {
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
-        int currentScore = player.getScore();
-
-        if (currentScore == 40 && opponent.getScore() < 40) {
+        if (player.getScore() == 40 && opponent.getScore() < 40) {
             player.setGamesWon(calculateAdditionalWin(player.getGamesWon()));
             winGame(player);
             return;
@@ -24,7 +22,7 @@ public class MatchesService {
         if (player.isAdvantage()) {
             winGame(player);
         } else {
-            int additionalPoints = calculateAdditionalPoints(currentScore);
+            int additionalPoints = calculateAdditionalPoints(player.getScore());
             player.setScore(additionalPoints);
         }
     }
