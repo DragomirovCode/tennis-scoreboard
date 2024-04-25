@@ -1,13 +1,6 @@
 package ru.dragomirov.dto;
 
-import ru.dragomirov.commons.ScoreManager;
-
 public class CreateMatchesDTOFactory {
-    private ScoreManager scoreManager;
-
-    public CreateMatchesDTOFactory() {
-        this.scoreManager = new ScoreManager();
-    }
 
     public MatchesDTO createMatches(PlayersDTO player1, PlayersDTO player2, String score) {
         MatchesDTO matches = new MatchesDTO();
@@ -18,14 +11,16 @@ public class CreateMatchesDTOFactory {
     }
 
     public void addPointsToPlayers1(PlayersDTO player1) {
-        scoreManager.addPoints(player1, 1); // Добавьте 1 очко игроку 1
+        int currentScore = player1.getScore();
+        player1.setScore(currentScore + 1);
     }
 
     public void addPointsToPlayers2(PlayersDTO player2) {
-        scoreManager.addPoints(player2, 1); // Добавьте 1 очко игроку 2
+        int currentScore = player2.getScore();
+        player2.setScore(currentScore + 1);
     }
 
     public int getPlayerScore(PlayersDTO player) {
-        return scoreManager.getPoints(player);
+        return player.getScore();
     }
 }
