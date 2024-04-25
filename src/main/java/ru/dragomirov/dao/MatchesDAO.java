@@ -44,4 +44,13 @@ public class MatchesDAO implements MatchesRepository {
         dto.setWinner(playersDAO.toDTO(match.getWinner()));
         return dto;
     }
+
+    public Matches toEntity(MatchesDTO matchesDTO) {
+        Matches matches = new Matches();
+        matches.setId(matchesDTO.getId());
+        matches.setPlayer1(playersDAO.toEntity(matchesDTO.getPlayer1()));
+        matches.setPlayer2(playersDAO.toEntity(matchesDTO.getPlayer2()));
+        matches.setWinner(playersDAO.toEntity(matchesDTO.getWinner()));
+        return matches;
+    }
 }
