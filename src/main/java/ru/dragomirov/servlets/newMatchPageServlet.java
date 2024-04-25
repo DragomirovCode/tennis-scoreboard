@@ -44,9 +44,9 @@ public class newMatchPageServlet extends BaseServlet {
                 return;
             }
 
-            PlayersDTO player1DTO = playersDTOFactory.createMatches(player1Name, 0);
+            PlayersDTO player1DTO = playersDTOFactory.createPlayers(player1Name, 0);
 
-            PlayersDTO player2DTO = playersDTOFactory.createMatches(player2Name, 0);
+            PlayersDTO player2DTO = playersDTOFactory.createPlayers(player2Name, 0);
 
             MatchesDTO match = matchesDTOFactory.createMatches(player1DTO, player2DTO);
 
