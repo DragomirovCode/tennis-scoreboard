@@ -7,15 +7,19 @@ import ru.dragomirov.commons.BaseServlet;
 import ru.dragomirov.dto.MatchesDTOFactory;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
+import ru.dragomirov.dto.PlayersDTOFactory;
+
 import java.io.IOException;
 
 @WebServlet(name = "newMatchPageServlet", urlPatterns = "/new-match")
 public class newMatchPageServlet extends BaseServlet {
-    private MatchesDTOFactory factory;
+    private MatchesDTOFactory matchesDTOFactory;
+    private PlayersDTOFactory playersDTOFactory;
 
     @Override
     public void init() {
-        factory = new MatchesDTOFactory();
+        matchesDTOFactory = new MatchesDTOFactory();
+        playersDTOFactory = new PlayersDTOFactory();
     }
 
     @Override
@@ -40,13 +44,11 @@ public class newMatchPageServlet extends BaseServlet {
                 return;
             }
 
-            PlayersDTO player1DTO = new PlayersDTO();
-            player1DTO.setName(player1Name);
+            PlayersDTO player1DTO = playersDTOFactory.createMatches(player1Name, 0);
 
-            PlayersDTO player2DTO = new PlayersDTO();
-            player2DTO.setName(player2Name);
+            PlayersDTO player2DTO = playersDTOFactory.createMatches(player2Name, 0);
 
-            MatchesDTO match = factory.createMatches(player1DTO, player2DTO, "0-0");
+            MatchesDTO match = matchesDTOFactory.createMatches(player1DTO, player2DTO);
 
             // Сохранение в сессии
             req.getSession().setAttribute("match", match);
