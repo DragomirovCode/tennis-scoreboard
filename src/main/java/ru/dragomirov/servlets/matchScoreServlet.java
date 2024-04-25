@@ -90,10 +90,10 @@ public class matchScoreServlet extends BaseServlet {
             // Обработка действия
             switch (action) {
                 case "player1_won_point":
-                    matchesService.addPointsToPlayers(match.getPlayer1());
+                    matchesService.addPointsToPlayers(match.getPlayer1(), match.getPlayer2());
                     break;
                 case "player2_won_point":
-                    matchesService.addPointsToPlayers(match.getPlayer2());
+                    matchesService.addPointsToPlayers(match.getPlayer2(), match.getPlayer1());
                     break;
                 default:
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
