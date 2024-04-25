@@ -29,17 +29,22 @@ public class MatchesService {
         }
     }
 
-        switch (currentScore) {
+    private boolean isDeuce(PlayersDTO player, PlayersDTO opponent) {
+        return player.getScore() == 40 && opponent.getScore() == 40 && !player.isAdvantage() && !opponent.isAdvantage();
+    }
+
+    private int calculateAdditionalPoints(int currentPoints) {
+        switch (currentPoints) {
             case 0:
-                additionalPoints = 15;
-                break;
+                return 15;
             case 15:
-                additionalPoints = 30;
-                break;
+                return 30;
             case 30:
-                additionalPoints = 40;
-                break;
+                return 40;
+            default:
+                return 0;
         }
+    }
 
         player.setScore(additionalPoints);
     }
