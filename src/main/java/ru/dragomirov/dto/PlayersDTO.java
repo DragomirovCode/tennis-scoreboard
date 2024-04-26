@@ -11,4 +11,5 @@ public class PlayersDTO {
     private int score;
     private boolean advantage;
     private int gamesWon;
+    private int set;
 }
