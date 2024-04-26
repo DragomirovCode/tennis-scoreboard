@@ -5,7 +5,7 @@ import ru.dragomirov.dto.PlayersDTO;
 public class MatchesService {
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
         if (player.getScore() == 40 && opponent.getScore() < 40) {
-            winGame(player);
+            winGame(player, opponent);
             return;
         }
 
@@ -15,24 +15,26 @@ public class MatchesService {
         }
 
         if (player.isAdvantage()) {
-            winGame(player);
+            winGame(player, opponent);
         } else {
             addPoint(player);
         }
     }
 
-    private void winGame(PlayersDTO player) {
+    private void winGame(PlayersDTO player, PlayersDTO opponent) {
         player.setGamesWon(getNextGameCount(player.getGamesWon()));
-        if (player.getGamesWon() == 6) {
+        if (player.getGamesWon() >= 6 && (player.getGamesWon() - opponent.getGamesWon() >= 2)) {
             player.setSet(player.getSet() + 1);
             player.setGamesWon(0);
+            opponent.setGamesWon(0);
+            opponent.setScore(0);
         }
         resetAfterWinning(player);
     }
 
     private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
         if (player.isAdvantage()) {
-            winGame(player);
+            winGame(player, opponent);
         } else if (opponent.isAdvantage()) {
             opponent.setAdvantage(false);
             player.setAdvantage(true);
