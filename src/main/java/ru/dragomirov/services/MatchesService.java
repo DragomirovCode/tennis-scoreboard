@@ -9,7 +9,9 @@ public class MatchesService {
             return;
         }
 
-        if (player.getScore() == 40 && opponent.getScore() < 40) {
+        if (player.getScore().equals("40") && opponent.getScore().equals("30") ||
+                player.getScore().equals("40") && opponent.getScore().equals("15") ||
+        player.getScore().equals("40") && opponent.getScore().equals("0")) {
             winGame(player, opponent);
             resetAfterWinning(player);
             resetAfterWinning(opponent);
@@ -53,35 +55,36 @@ public class MatchesService {
     }
 
     private void handleTieBreak(PlayersDTO player, PlayersDTO opponent) {
-        player.setScore(player.getScore() + 1);
-        if (player.getScore() >= 7 && (player.getScore() - opponent.getScore() >= 2)) {
+        player.setScore(String.valueOf(Integer.parseInt(player.getScore() + 1)));
+        if (Integer.parseInt(player.getScore()) >= 7 &&
+                (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
             player.setGamesWon(0);
-            player.setScore(0);
+            player.setScore("0");
             opponent.setGamesWon(0);
-            opponent.setScore(0);
+            opponent.setScore("0");
         }
     }
 
     private void addPoint(PlayersDTO player) {
-        int additionalPoints = getNextPoint(player.getScore());
+        String additionalPoints = getNextPoint(player.getScore());
         player.setScore(additionalPoints);
     }
 
     private boolean isDeuce(PlayersDTO player, PlayersDTO opponent) {
-        return player.getScore() == 40 && opponent.getScore() == 40;
+        return player.getScore().equals("40") && opponent.getScore().equals("40");
     }
 
-    private int getNextPoint(int currentPoints) {
+    private String getNextPoint(String currentPoints) {
         switch (currentPoints) {
-            case 0:
-                return 15;
-            case 15:
-                return 30;
-            case 30:
-                return 40;
+            case "0":
+                return "15";
+            case "15":
+                return "30";
+            case "30":
+                return "40";
             default:
-                return 0;
+                return "0";
         }
     }
 
@@ -90,7 +93,7 @@ public class MatchesService {
     }
 
     private void resetAfterWinning(PlayersDTO player) {
-        player.setScore(0);
+        player.setScore("0");
         player.setAdvantage(false);
     }
 }
