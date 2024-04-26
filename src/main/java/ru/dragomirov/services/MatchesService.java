@@ -4,6 +4,11 @@ import ru.dragomirov.dto.PlayersDTO;
 
 public class MatchesService {
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
+        if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
+            handleTieBreak(player, opponent);
+            return;
+        }
+
         if (player.getScore() == 40 && opponent.getScore() < 40) {
             winGame(player, opponent);
             return;
