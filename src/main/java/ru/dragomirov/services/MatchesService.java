@@ -11,6 +11,10 @@ public class MatchesService {
 
         if (player.getScore() == 40 && opponent.getScore() < 40) {
             winGame(player, opponent);
+            if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
+                player.setScore(0);
+                opponent.setScore(0);
+            }
             return;
         }
 
@@ -32,7 +36,6 @@ public class MatchesService {
             player.setSet(player.getSet() + 1);
             player.setGamesWon(0);
             opponent.setGamesWon(0);
-            opponent.setScore(0);
         }
         resetAfterWinning(player);
     }
@@ -58,7 +61,6 @@ public class MatchesService {
             opponent.setScore(0);
         }
     }
-
 
     private void addPoint(PlayersDTO player) {
         int additionalPoints = getNextPoint(player.getScore());
