@@ -96,6 +96,5 @@ public class MatchesService {
 
     private void resetAfterWinning(PlayersDTO player) {
         player.setScore("0");
-        player.setAdvantage(false);
     }
 }
