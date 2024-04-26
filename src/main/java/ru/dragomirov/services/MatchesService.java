@@ -5,30 +5,45 @@ import ru.dragomirov.dto.PlayersDTO;
 public class MatchesService {
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
         if (player.getScore() == 40 && opponent.getScore() < 40) {
-            player.setGamesWon(getNextGameCount(player.getGamesWon()));
-            resetAfterWinning(player);
+            winGame(player);
             return;
         }
 
         if (isDeuce(player, opponent)) {
-            if (player.isAdvantage()) {
-                resetAfterWinning(player);
-            } else {
-                player.setAdvantage(true);
-            }
+            handleDeuce(player, opponent);
             return;
         }
 
         if (player.isAdvantage()) {
-            resetAfterWinning(player);
+            winGame(player);
         } else {
-            int additionalPoints = getNextPoint(player.getScore());
-            player.setScore(additionalPoints);
+            addPoint(player);
         }
     }
 
+    private void winGame(PlayersDTO player) {
+        player.setGamesWon(getNextGameCount(player.getGamesWon()));
+        resetAfterWinning(player);
+    }
+
+    private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
+        if (player.isAdvantage()) {
+            winGame(player);
+        } else if (opponent.isAdvantage()) {
+            opponent.setAdvantage(false);
+            player.setAdvantage(true);
+        } else {
+            player.setAdvantage(true);
+        }
+    }
+
+    private void addPoint(PlayersDTO player) {
+        int additionalPoints = getNextPoint(player.getScore());
+        player.setScore(additionalPoints);
+    }
+
     private boolean isDeuce(PlayersDTO player, PlayersDTO opponent) {
-        return player.getScore() == 40 && opponent.getScore() == 40 && !player.isAdvantage() && !opponent.isAdvantage();
+        return player.getScore() == 40 && opponent.getScore() == 40;
     }
 
     private int getNextPoint(int currentPoints) {
@@ -57,7 +72,7 @@ public class MatchesService {
         }
     }
 
-    public void resetAfterWinning(PlayersDTO player) {
+    private void resetAfterWinning(PlayersDTO player) {
         player.setScore(0);
         player.setAdvantage(false);
     }
