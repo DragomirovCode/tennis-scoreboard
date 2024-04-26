@@ -13,12 +13,14 @@
         <th>Игрок</th>
         <th>Счёт</th>
         <th>Выигранные геймы</th> <!-- Добавление колонки с выигранными геймами -->
+        <th>Выигранные сеты</th>
         <th>Действие</th>
     </tr>
     <tr>
         <td>${match.player1.name}</td>
         <td>${match.player1.score}</td> <!-- Отображение счёта -->
         <td>${match.player1.gamesWon}</td> <!-- Отображение количества выигранных геймов -->
+        <td>${match.player1.set}</td> <!-- Отображение количества сетов -->
         <td>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player1_won_point">
@@ -30,6 +32,7 @@
         <td>${match.player2.name}</td>
         <td>${match.player2.score}</td> <!-- Отображение счёта -->
         <td>${match.player2.gamesWon}</td> <!-- Отображение количества выигранных геймов -->
+        <td>${match.player2.set}</td> <!-- Отображение количества сетов -->
         <td>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player2_won_point">
