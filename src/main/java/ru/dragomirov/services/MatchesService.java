@@ -23,6 +23,10 @@ public class MatchesService {
 
     private void winGame(PlayersDTO player) {
         player.setGamesWon(getNextGameCount(player.getGamesWon()));
+        if (player.getGamesWon() == 6) {
+            player.setSet(player.getSet() + 1);
+            player.setGamesWon(0);
+        }
         resetAfterWinning(player);
     }
 
