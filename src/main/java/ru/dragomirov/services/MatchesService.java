@@ -43,6 +43,18 @@ public class MatchesService {
         }
     }
 
+    private void handleTieBreak(PlayersDTO player, PlayersDTO opponent) {
+        player.setScore(player.getScore() + 1);
+        if (player.getScore() >= 7 && (player.getScore() - opponent.getScore() >= 2)) {
+            player.setSet(player.getSet() + 1);
+            player.setGamesWon(0);
+            player.setScore(0);
+            opponent.setGamesWon(0);
+            opponent.setScore(0);
+        }
+    }
+
+
     private void addPoint(PlayersDTO player) {
         int additionalPoints = getNextPoint(player.getScore());
         player.setScore(additionalPoints);
