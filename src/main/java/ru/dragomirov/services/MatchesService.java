@@ -11,10 +11,8 @@ public class MatchesService {
 
         if (player.getScore() == 40 && opponent.getScore() < 40) {
             winGame(player, opponent);
-            if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
-                player.setScore(0);
-                opponent.setScore(0);
-            }
+            resetAfterWinning(player);
+            resetAfterWinning(opponent);
             return;
         }
 
@@ -25,6 +23,8 @@ public class MatchesService {
 
         if (player.isAdvantage()) {
             winGame(player, opponent);
+            resetAfterWinning(player);
+            resetAfterWinning(opponent);
         } else {
             addPoint(player);
         }
@@ -37,12 +37,13 @@ public class MatchesService {
             player.setGamesWon(0);
             opponent.setGamesWon(0);
         }
-        resetAfterWinning(player);
     }
 
     private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
         if (player.isAdvantage()) {
             winGame(player, opponent);
+            resetAfterWinning(player);
+            resetAfterWinning(opponent);
         } else if (opponent.isAdvantage()) {
             opponent.setAdvantage(false);
             player.setAdvantage(true);
