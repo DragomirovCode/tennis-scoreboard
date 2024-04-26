@@ -11,7 +11,7 @@ public class MatchesService {
 
         if (player.getScore().equals("40") && opponent.getScore().equals("30") ||
                 player.getScore().equals("40") && opponent.getScore().equals("15") ||
-        player.getScore().equals("40") && opponent.getScore().equals("0")) {
+                player.getScore().equals("40") && opponent.getScore().equals("0")) {
             winGame(player, opponent);
             resetAfterWinning(player);
             resetAfterWinning(opponent);
@@ -21,9 +21,12 @@ public class MatchesService {
         if (isDeuce(player, opponent)) {
             handleDeuce(player, opponent);
             return;
+        } else if (player.getScore().equals("40") && opponent.getScore().equals("AD")) {
+                handleDeuce(player, opponent);
+                return;
         }
 
-        if (player.isAdvantage()) {
+        if (player.getScore().equals("AD")) {
             winGame(player, opponent);
             resetAfterWinning(player);
             resetAfterWinning(opponent);
@@ -42,15 +45,15 @@ public class MatchesService {
     }
 
     private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
-        if (player.isAdvantage()) {
+        if (player.getScore().equals("AD")) {
             winGame(player, opponent);
             resetAfterWinning(player);
             resetAfterWinning(opponent);
-        } else if (opponent.isAdvantage()) {
-            opponent.setAdvantage(false);
-            player.setAdvantage(true);
+        } else if (opponent.getScore().equals("AD")) {
+            opponent.setScore("40");
+            player.setScore("AD");
         } else {
-            player.setAdvantage(true);
+            player.setScore("AD");
         }
     }
 
@@ -83,9 +86,8 @@ public class MatchesService {
                 return "30";
             case "30":
                 return "40";
-            default:
-                return "0";
         }
+        return currentPoints;
     }
 
     private int getNextGameCount(int countScore) {
