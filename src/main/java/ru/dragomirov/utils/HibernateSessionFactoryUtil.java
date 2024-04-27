@@ -3,7 +3,7 @@ package ru.dragomirov.utils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class ConnectionUtils {
+public class HibernateSessionFactoryUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {

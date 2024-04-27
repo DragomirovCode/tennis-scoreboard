@@ -1,14 +1,14 @@
 
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
-import ru.dragomirov.utils.ConnectionUtils;
+import ru.dragomirov.utils.HibernateSessionFactoryUtil;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ConnectionUtilsTest {
+public class HibernateSessionFactoryUtilTest {
     @Test
     public void shouldGetSessionFactory() {
-        SessionFactory sessionFactory = ConnectionUtils.getSessionFactory();
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         assertNotNull(sessionFactory);
     }
 }

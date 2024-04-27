@@ -1,6 +1,6 @@
 package ru.dragomirov.commons;
 import org.hibernate.Session;
-import ru.dragomirov.utils.ConnectionUtils;
+import ru.dragomirov.utils.HibernateSessionFactoryUtil;
 
 public class HibernateSessionManager {
 
@@ -16,7 +16,7 @@ public class HibernateSessionManager {
 
     // Метод для выполнения запроса к базе данных с использованием сеанса Hibernate
     public static <T> T performSessionQuery(SessionQuery<T> sessionQuery, String errorMessage) {
-        try (Session session = ConnectionUtils.getSessionFactory().openSession()) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return sessionQuery.execute(session);
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,7 +28,7 @@ public class HibernateSessionManager {
     public static void performTransaction(TransactionOperation transactionOperation) {
         Session session = null;
         try {
-            session = ConnectionUtils.getSessionFactory().openSession();
+            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
             session.beginTransaction();
             transactionOperation.execute(session);
             session.getTransaction().commit();
