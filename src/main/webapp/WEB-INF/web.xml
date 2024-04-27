@@ -6,6 +6,7 @@
 
     <listener>
         <listener-class>ru.dragomirov.utils.H2ServerInitializerUtil</listener-class>
+        <listener-class>ru.dragomirov.utils.HibernateSessionFactoryUtil</listener-class>
     </listener>
 
 </web-app>
