@@ -58,7 +58,7 @@ public class MatchesService {
     }
 
     private void handleTieBreak(PlayersDTO player, PlayersDTO opponent) {
-        player.setScore(String.valueOf(Integer.parseInt(player.getScore() + 1)));
+        player.setScore(String.valueOf(Integer.parseInt(player.getScore()) + 1));
         if (Integer.parseInt(player.getScore()) >= 7 &&
                 (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
