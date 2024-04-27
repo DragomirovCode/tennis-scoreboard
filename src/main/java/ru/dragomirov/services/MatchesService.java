@@ -2,37 +2,41 @@ package ru.dragomirov.services;
 
 import ru.dragomirov.dto.PlayersDTO;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+
 public class MatchesService {
+    private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
+
+    {
+        scoreHandlers.put("40:30", this::winGameAndReset);
+        scoreHandlers.put("40:15", this::winGameAndReset);
+        scoreHandlers.put("40:0",  this::winGameAndReset);
+        scoreHandlers.put("40:40", this::handleDeuce);
+        scoreHandlers.put("40:AD", this::handleDeuce);
+        scoreHandlers.put("AD:40", this::winGameAndReset);
+        scoreHandlers.put("AD:AD", this::winGameAndReset);
+    }
+
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
         if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
             handleTieBreak(player, opponent);
             return;
         }
 
-        if (player.getScore().equals("40") && opponent.getScore().equals("30") ||
-                player.getScore().equals("40") && opponent.getScore().equals("15") ||
-                player.getScore().equals("40") && opponent.getScore().equals("0")) {
-            winGame(player, opponent);
-            resetAfterWinning(player);
-            resetAfterWinning(opponent);
-            return;
-        }
-
-        if (isDeuce(player, opponent)) {
-            handleDeuce(player, opponent);
-            return;
-        } else if (player.getScore().equals("40") && opponent.getScore().equals("AD")) {
-                handleDeuce(player, opponent);
-                return;
-        }
-
-        if (player.getScore().equals("AD")) {
-            winGame(player, opponent);
-            resetAfterWinning(player);
-            resetAfterWinning(opponent);
+        String scoreKey = player.getScore() + ":" + opponent.getScore();
+        if (scoreHandlers.containsKey(scoreKey)) {
+            scoreHandlers.get(scoreKey).accept(player, opponent);
         } else {
             addPoint(player);
         }
+    }
+
+    private void winGameAndReset(PlayersDTO player, PlayersDTO opponent) {
+        winGame(player, opponent);
+        resetAfterWinning(player);
+        resetAfterWinning(opponent);
     }
 
     private void winGame(PlayersDTO player, PlayersDTO opponent) {
@@ -72,10 +76,6 @@ public class MatchesService {
     private void addPoint(PlayersDTO player) {
         String additionalPoints = getNextPoint(player.getScore());
         player.setScore(additionalPoints);
-    }
-
-    private boolean isDeuce(PlayersDTO player, PlayersDTO opponent) {
-        return player.getScore().equals("40") && opponent.getScore().equals("40");
     }
 
     private String getNextPoint(String currentPoints) {
