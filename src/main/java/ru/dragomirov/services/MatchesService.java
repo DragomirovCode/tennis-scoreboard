@@ -3,6 +3,7 @@ package ru.dragomirov.services;
 import ru.dragomirov.dao.MatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
 import ru.dragomirov.dto.MatchesDTO;
+import ru.dragomirov.dto.MatchesDTOFactory;
 import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Matches;
 import ru.dragomirov.entities.Players;
@@ -15,6 +16,7 @@ public class MatchesService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
     private final PlayersService playersService;
+    private final MatchesDTOFactory matchesDTOFactory;
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
 
     {
@@ -31,6 +33,7 @@ public class MatchesService {
         this.matchesDAO = new MatchesDAO();
         this.playersDAO = new PlayersDAO();
         this.playersService = new PlayersService();
+        this.matchesDTOFactory = new MatchesDTOFactory();
     }
 
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
