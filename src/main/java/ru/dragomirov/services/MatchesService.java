@@ -130,18 +130,18 @@ public class MatchesService {
     public MatchesDTO toDTO(Matches match) {
         MatchesDTO dto = new MatchesDTO();
         dto.setId(match.getId());
-        dto.setPlayer1(playersDAO.toDTO(match.getPlayer1()));
-        dto.setPlayer2(playersDAO.toDTO(match.getPlayer2()));
-        dto.setWinner(playersDAO.toDTO(match.getWinner()));
+        dto.setPlayer1(playersService.toDTO(match.getPlayer1()));
+        dto.setPlayer2(playersService.toDTO(match.getPlayer2()));
+        dto.setWinner(playersService.toDTO(match.getWinner()));
         return dto;
     }
 
     public Matches toEntity(MatchesDTO matchesDTO) {
         Matches matches = new Matches();
         matches.setId(matchesDTO.getId());
-        matches.setPlayer1(playersDAO.toEntity(matchesDTO.getPlayer1()));
-        matches.setPlayer2(playersDAO.toEntity(matchesDTO.getPlayer2()));
-        matches.setWinner(playersDAO.toEntity(matchesDTO.getWinner()));
+        matches.setPlayer1(playersService.toEntity(matchesDTO.getPlayer1()));
+        matches.setPlayer2(playersService.toEntity(matchesDTO.getPlayer2()));
+        matches.setWinner(playersService.toEntity(matchesDTO.getWinner()));
         return matches;
     }
 }
