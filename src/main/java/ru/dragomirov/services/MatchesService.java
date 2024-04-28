@@ -35,8 +35,7 @@ public class MatchesService {
 
     private void winGameAndReset(PlayersDTO player, PlayersDTO opponent) {
         winGame(player, opponent);
-        resetAfterWinning(player);
-        resetAfterWinning(opponent);
+        resetScoreAfterWinning(player, opponent);
     }
 
     private void winGame(PlayersDTO player, PlayersDTO opponent) {
@@ -51,8 +50,7 @@ public class MatchesService {
     private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
         if (player.getScore().equals("AD")) {
             winGame(player, opponent);
-            resetAfterWinning(player);
-            resetAfterWinning(opponent);
+            resetScoreAfterWinning(player, opponent);
         } else if (opponent.getScore().equals("AD")) {
             opponent.setScore("40");
             player.setScore("AD");
@@ -94,7 +92,8 @@ public class MatchesService {
         return countScore + 1;
     }
 
-    private void resetAfterWinning(PlayersDTO player) {
+    private void resetScoreAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setScore("0");
+        opponent.setScore("0");
     }
 }
