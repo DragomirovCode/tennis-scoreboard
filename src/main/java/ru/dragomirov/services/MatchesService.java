@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+//TODO: Нужно добавить условие, что игра идёт до 3-х сетов
+
+//TODO: Нужно добавить, добавление сущности в бд, после 3-х сетов.
+
 public class MatchesService {
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
 
@@ -26,8 +30,7 @@ public class MatchesService {
         }
 
         if (player.getSet() == 3 || opponent.getSet() == 3) {
-            player.setGamesWon(0);
-            opponent.setGamesWon(0);
+            resetGamesAfterWinning(player, opponent);
             resetScoreAfterWinning(player, opponent);
         }
 
@@ -48,8 +51,7 @@ public class MatchesService {
         player.setGamesWon(getNextGameCount(player.getGamesWon()));
         if (player.getGamesWon() >= 6 && (player.getGamesWon() - opponent.getGamesWon() >= 2)) {
             player.setSet(player.getSet() + 1);
-            player.setGamesWon(0);
-            opponent.setGamesWon(0);
+            resetGamesAfterWinning(player, opponent);
         }
     }
 
@@ -70,10 +72,8 @@ public class MatchesService {
         if (Integer.parseInt(player.getScore()) >= 7 &&
                 (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
-            player.setGamesWon(0);
-            player.setScore("0");
-            opponent.setGamesWon(0);
-            opponent.setScore("0");
+            resetGamesAfterWinning(player, opponent);
+            resetScoreAfterWinning(player, opponent);
         }
     }
 
@@ -101,5 +101,10 @@ public class MatchesService {
     private void resetScoreAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setScore("0");
         opponent.setScore("0");
+    }
+
+    private void resetGamesAfterWinning(PlayersDTO player, PlayersDTO opponent) {
+        player.setGamesWon(0);
+        opponent.setGamesWon(0);
     }
 }
