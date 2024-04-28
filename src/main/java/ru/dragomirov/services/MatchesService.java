@@ -32,6 +32,7 @@ public class MatchesService {
         if (player.getSet() == 3 || opponent.getSet() == 3) {
             resetGamesAfterWinning(player, opponent);
             resetScoreAfterWinning(player, opponent);
+            resetSetAfterWinning(player, opponent);
         }
 
         String scoreKey = player.getScore() + ":" + opponent.getScore();
@@ -106,5 +107,10 @@ public class MatchesService {
     private void resetGamesAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setGamesWon(0);
         opponent.setGamesWon(0);
+    }
+
+    private void resetSetAfterWinning(PlayersDTO player, PlayersDTO opponent) {
+        player.setSet(0);
+        opponent.setSet(0);
     }
 }
