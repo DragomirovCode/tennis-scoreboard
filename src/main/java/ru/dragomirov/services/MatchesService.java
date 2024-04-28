@@ -62,13 +62,7 @@ public class MatchesService {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
             if (player.getSet() == 3 || opponent.getSet() == 3) {
-                resetGamesAfterWinning(player, opponent);
-                resetScoreAfterWinning(player, opponent);
-                resetSetAfterWinning(player, opponent);
-                Players playerEntity = playersService.toEntity(player);
-                Players opponentEntity = playersService.toEntity(opponent);
-                playersDAO.save(playerEntity);
-                playersDAO.save(opponentEntity);
+                handleSetWin(player, opponent);
             }
         }
     }
@@ -129,6 +123,16 @@ public class MatchesService {
     private void resetSetAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setSet(0);
         opponent.setSet(0);
+    }
+
+    private void handleSetWin(PlayersDTO player, PlayersDTO opponent) {
+        resetScoreAfterWinning(player, opponent);
+        resetGamesAfterWinning(player, opponent);
+        resetSetAfterWinning(player, opponent);
+        Players playerEntity = playersService.toEntity(player);
+        Players opponentEntity = playersService.toEntity(opponent);
+        playersDAO.save(playerEntity);
+        playersDAO.save(opponentEntity);
     }
 
     public MatchesDTO toDTO(Matches match) {
