@@ -8,10 +8,12 @@ import ru.dragomirov.entities.Players;
 public class PlayersService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
+    private final MatchesService matchesService;
 
     public PlayersService() {
         this.matchesDAO = new MatchesDAO();
         this.playersDAO = new PlayersDAO();
+        this.matchesService = new MatchesService();
     }
 
     public PlayersDTO toDTO(Players player) {
