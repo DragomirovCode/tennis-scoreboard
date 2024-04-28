@@ -44,18 +44,4 @@ public class PlayersDAO implements PlayersRepository {
     public void delete(Players player) {
         HibernateSessionManager.performTransaction(session -> session.delete(player));
     }
-
-    public PlayersDTO toDTO(Players player) {
-        PlayersDTO dto = new PlayersDTO();
-        dto.setId(player.getId());
-        dto.setName(player.getName());
-        return dto;
-    }
-
-    public Players toEntity(PlayersDTO dto) {
-        Players player = new Players();
-        player.setId(dto.getId());
-        player.setName(dto.getName());
-        return player;
-    }
 }
