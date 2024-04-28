@@ -1,5 +1,7 @@
 package ru.dragomirov.services;
 
+import ru.dragomirov.dao.MatchesDAO;
+import ru.dragomirov.dao.PlayersDAO;
 import ru.dragomirov.dto.PlayersDTO;
 
 import java.util.HashMap;
@@ -11,6 +13,8 @@ import java.util.function.BiConsumer;
 //TODO: Нужно добавить, добавление сущности в бд, после 3-х сетов.
 
 public class MatchesService {
+    private final MatchesDAO matchesDAO;
+    private final PlayersDAO playersDAO;
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
 
     {
@@ -21,6 +25,11 @@ public class MatchesService {
         scoreHandlers.put("40:AD", this::handleDeuce);
         scoreHandlers.put("AD:40", this::winGameAndReset);
         scoreHandlers.put("AD:AD", this::winGameAndReset);
+    }
+
+    public MatchesService() {
+        this.matchesDAO = new MatchesDAO();
+        this.playersDAO = new PlayersDAO();
     }
 
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
