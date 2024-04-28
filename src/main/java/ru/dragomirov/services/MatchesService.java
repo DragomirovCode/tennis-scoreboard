@@ -36,9 +36,9 @@ public class MatchesService {
         this.matchesDTOFactory = new MatchesDTOFactory();
     }
 
-    public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
+    public void addPointsToPlayers(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
         if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
-            handleTieBreak(player, opponent);
+            handleTieBreak(match, player, opponent);
             return;
         }
 
@@ -47,6 +47,10 @@ public class MatchesService {
             scoreHandlers.get(scoreKey).accept(player, opponent);
         } else {
             addPoint(player);
+        }
+
+        if (player.getSet() == 2 || opponent.getSet() == 2) {
+            handleSetWin(match, player, opponent);
         }
     }
 
@@ -60,9 +64,6 @@ public class MatchesService {
         if (player.getGamesWon() >= 6 && (player.getGamesWon() - opponent.getGamesWon() >= 2)) {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
-            if (player.getSet() == 3 || opponent.getSet() == 3) {
-                handleSetWin(player, opponent);
-            }
         }
     }
 
@@ -78,13 +79,14 @@ public class MatchesService {
         }
     }
 
-    private void handleTieBreak(PlayersDTO player, PlayersDTO opponent) {
+    private void handleTieBreak(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
         player.setScore(String.valueOf(Integer.parseInt(player.getScore()) + 1));
         if (Integer.parseInt(player.getScore()) >= 7 &&
                 (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
             resetScoreAfterWinning(player, opponent);
+            handleSetWin(match, player, opponent);
         }
     }
 
