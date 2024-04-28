@@ -17,6 +17,7 @@ import java.util.function.BiConsumer;
 public class MatchesService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
+    private final PlayersService playersService;
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
 
     {
@@ -32,6 +33,7 @@ public class MatchesService {
     public MatchesService() {
         this.matchesDAO = new MatchesDAO();
         this.playersDAO = new PlayersDAO();
+        this.playersService = new PlayersService();
     }
 
     public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
