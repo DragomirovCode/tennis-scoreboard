@@ -11,10 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-//TODO: Нужно добавить условие, что игра идёт до 3-х сетов
-
-//TODO: Нужно добавить, добавление сущности в бд, после 3-х сетов.
-
 public class MatchesService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
