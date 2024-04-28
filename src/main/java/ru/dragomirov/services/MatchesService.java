@@ -119,28 +119,22 @@ public class MatchesService {
         opponent.setGamesWon(0);
     }
 
-    private void resetSetAfterWinning(PlayersDTO player, PlayersDTO opponent) {
-        player.setSet(0);
-        opponent.setSet(0);
-    }
-
-    private void handleSetWin(PlayersDTO player, PlayersDTO opponent) {
-        resetScoreAfterWinning(player, opponent);
-        resetGamesAfterWinning(player, opponent);
-        resetSetAfterWinning(player, opponent);
-
+    private void handleSetWin(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
         Players playerEntity = playersService.toEntity(player);
         Players opponentEntity = playersService.toEntity(opponent);
 
         playersDAO.save(playerEntity);
         playersDAO.save(opponentEntity);
 
-        Matches newMatch = new Matches();
-        newMatch.setPlayer1(playerEntity);
-        newMatch.setPlayer2(opponentEntity);
-        newMatch.setWinner(playerEntity);
+        PlayersDTO players1 = playersService.toDTO(playerEntity);
+        PlayersDTO players2 = playersService.toDTO(opponentEntity);
+        match.setPlayer1(players1);
+        match.setPlayer2(players2);
+        match.setWinner(players1);
 
-        matchesDAO.save(newMatch);
+        Matches updatedMatch = toEntity(match);
+
+        matchesDAO.save(updatedMatch);
     }
 
     public MatchesDTO toDTO(Matches match) {
