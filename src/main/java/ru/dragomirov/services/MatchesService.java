@@ -2,7 +2,9 @@ package ru.dragomirov.services;
 
 import ru.dragomirov.dao.MatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
+import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
+import ru.dragomirov.entities.Matches;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -121,5 +123,23 @@ public class MatchesService {
     private void resetSetAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setSet(0);
         opponent.setSet(0);
+    }
+
+    public MatchesDTO toDTO(Matches match) {
+        MatchesDTO dto = new MatchesDTO();
+        dto.setId(match.getId());
+        dto.setPlayer1(playersDAO.toDTO(match.getPlayer1()));
+        dto.setPlayer2(playersDAO.toDTO(match.getPlayer2()));
+        dto.setWinner(playersDAO.toDTO(match.getWinner()));
+        return dto;
+    }
+
+    public Matches toEntity(MatchesDTO matchesDTO) {
+        Matches matches = new Matches();
+        matches.setId(matchesDTO.getId());
+        matches.setPlayer1(playersDAO.toEntity(matchesDTO.getPlayer1()));
+        matches.setPlayer2(playersDAO.toEntity(matchesDTO.getPlayer2()));
+        matches.setWinner(playersDAO.toEntity(matchesDTO.getWinner()));
+        return matches;
     }
 }
