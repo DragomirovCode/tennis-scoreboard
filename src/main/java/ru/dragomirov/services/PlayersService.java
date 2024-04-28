@@ -2,14 +2,16 @@ package ru.dragomirov.services;
 
 import ru.dragomirov.dao.MatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
+import ru.dragomirov.dto.PlayersDTO;
+import ru.dragomirov.entities.Players;
 
 public class PlayersService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
 
-    public PlayersService(MatchesDAO matchesDAO, PlayersDAO playersDAO) {
-        this.matchesDAO = matchesDAO;
-        this.playersDAO = playersDAO;
+    public PlayersService() {
+        this.matchesDAO = new MatchesDAO();
+        this.playersDAO = new PlayersDAO();
     }
 
     public PlayersDTO toDTO(Players player) {
