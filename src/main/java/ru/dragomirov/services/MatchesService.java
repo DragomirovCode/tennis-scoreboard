@@ -5,6 +5,7 @@ import ru.dragomirov.dao.PlayersDAO;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Matches;
+import ru.dragomirov.entities.Players;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +43,6 @@ public class MatchesService {
             return;
         }
 
-        if (player.getSet() == 3 || opponent.getSet() == 3) {
-            resetGamesAfterWinning(player, opponent);
-            resetScoreAfterWinning(player, opponent);
-            resetSetAfterWinning(player, opponent);
-        }
-
         String scoreKey = player.getScore() + ":" + opponent.getScore();
         if (scoreHandlers.containsKey(scoreKey)) {
             scoreHandlers.get(scoreKey).accept(player, opponent);
@@ -66,6 +61,15 @@ public class MatchesService {
         if (player.getGamesWon() >= 6 && (player.getGamesWon() - opponent.getGamesWon() >= 2)) {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
+            if (player.getSet() == 3 || opponent.getSet() == 3) {
+                resetGamesAfterWinning(player, opponent);
+                resetScoreAfterWinning(player, opponent);
+                resetSetAfterWinning(player, opponent);
+                Players playerEntity = playersService.toEntity(player);
+                Players opponentEntity = playersService.toEntity(opponent);
+                playersDAO.save(playerEntity);
+                playersDAO.save(opponentEntity);
+            }
         }
     }
 
