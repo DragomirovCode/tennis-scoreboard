@@ -125,10 +125,19 @@ public class MatchesService {
         resetScoreAfterWinning(player, opponent);
         resetGamesAfterWinning(player, opponent);
         resetSetAfterWinning(player, opponent);
+
         Players playerEntity = playersService.toEntity(player);
         Players opponentEntity = playersService.toEntity(opponent);
+
         playersDAO.save(playerEntity);
         playersDAO.save(opponentEntity);
+
+        Matches newMatch = new Matches();
+        newMatch.setPlayer1(playerEntity);
+        newMatch.setPlayer2(opponentEntity);
+        newMatch.setWinner(playerEntity);
+
+        matchesDAO.save(newMatch);
     }
 
     public MatchesDTO toDTO(Matches match) {
