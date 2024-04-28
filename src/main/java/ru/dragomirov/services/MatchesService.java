@@ -25,6 +25,12 @@ public class MatchesService {
             return;
         }
 
+        if (player.getSet() == 3 || opponent.getSet() == 3) {
+            player.setGamesWon(0);
+            opponent.setGamesWon(0);
+            resetScoreAfterWinning(player, opponent);
+        }
+
         String scoreKey = player.getScore() + ":" + opponent.getScore();
         if (scoreHandlers.containsKey(scoreKey)) {
             scoreHandlers.get(scoreKey).accept(player, opponent);
