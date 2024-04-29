@@ -22,10 +22,12 @@
         <td>${match.player1.gamesWon}</td> <!-- Отображение количества выигранных геймов -->
         <td>${match.player1.set}</td> <!-- Отображение количества сетов -->
         <td>
+            <% if (match.getWinner() == null) { %>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player1_won_point">
                 <button type="submit">Игрок 1 выиграл очко</button>
             </form>
+            <% } %>
         </td>
     </tr>
     <tr>
@@ -34,10 +36,12 @@
         <td>${match.player2.gamesWon}</td> <!-- Отображение количества выигранных геймов -->
         <td>${match.player2.set}</td> <!-- Отображение количества сетов -->
         <td>
+            <% if (match.getWinner() == null) { %>
             <form method="post" action="/match-score?uuid=${match.id}">
                 <input type="hidden" name="action" value="player2_won_point">
                 <button type="submit">Игрок 2 выиграл очко</button>
             </form>
+            <% } %>
         </td>
     </tr>
 </table>
