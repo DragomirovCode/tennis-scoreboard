@@ -12,12 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-/**
- * Моментально выводит победителя
- */
-
-//TODO: Пофиксить ошибку с исчизновением данных после победы n-го игрока.
-
 public class MatchesService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
