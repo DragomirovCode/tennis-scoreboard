@@ -5,5 +5,6 @@
 </head>
 <body>
 <a href="/new-match.jsp">Добавить новый матч</a>
+<a href="/matches.jsp.jsp">Посмотреть историю матчей</a>
 </body>
 </html>
