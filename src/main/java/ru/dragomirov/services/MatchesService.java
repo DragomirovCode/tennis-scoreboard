@@ -49,7 +49,7 @@ public class MatchesService {
             addPoint(player);
         }
 
-        if (player.getSet() == 2 || opponent.getSet() == 2) {
+        if (player.getSet() == 3 || opponent.getSet() == 3) {
             handleSetWin(match, player, opponent);
         }
     }
