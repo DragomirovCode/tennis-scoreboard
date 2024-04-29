@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+/**
+ * Моментально выводит победителя
+ */
+
+//TODO: Пофиксить ошибку с исчизновением данных после победы n-го игрока.
+
 public class MatchesService {
     private final MatchesDAO matchesDAO;
     private final PlayersDAO playersDAO;
@@ -129,12 +135,11 @@ public class MatchesService {
         playersDAO.save(opponentEntity);
 
         PlayersDTO players1 = playersService.toDTO(playerEntity);
-        PlayersDTO players2 = playersService.toDTO(opponentEntity);
-        match.setPlayer1(players1);
-        match.setPlayer2(players2);
         match.setWinner(players1);
 
         Matches updatedMatch = toEntity(match);
+        updatedMatch.setPlayer1(playerEntity);
+        updatedMatch.setPlayer2(opponentEntity);
 
         matchesDAO.save(updatedMatch);
     }
