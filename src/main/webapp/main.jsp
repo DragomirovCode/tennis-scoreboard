@@ -4,6 +4,6 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/new-match.jsp">Перейти на новый матч</a>
+<a href="/new-match.jsp">Добавить новый матч</a>
 </body>
 </html>
