@@ -47,9 +47,7 @@ public class MatchesService {
             scoreHandlers.get(scoreKey).accept(player, opponent);
         } else {
             addPoint(player);
-        }
-
-        if (player.getSet() == 3 || opponent.getSet() == 3) {
+        } if (player.getSet() == 1) {
             handleSetWin(match, player, opponent);
         }
     }
