@@ -4,14 +4,29 @@
 <html>
 <head>
     <title>Список матчей</title>
+    <style>
+        /* Этот стиль обеспечивает горизонтальное выравнивание */
+        .inline-buttons {
+            display: inline-block;
+            margin-right: 10px; /* Регулируем расстояние между кнопками */
+        }
+    </style>
 </head>
 <body>
 <h1>Список матчей</h1>
 
-<form action="/matches" method="get">
-    <input type="text" name="name" placeholder="Имя игрока">
-    <input type="submit" value="Искать">
-</form>
+<!-- Контейнер для размещения двух кнопок в одну строку -->
+<div>
+    <form action="/matches" method="get" class="inline-buttons">
+        <input type="text" name="name" placeholder="Имя игрока">
+        <input type="submit" value="Поиск">
+    </form>
+
+    <form action="/matches" method="get" class="inline-buttons">
+        <input type="hidden" name="name">
+        <input type="submit" value="Сбросить">
+    </form>
+</div>
 
 <table border="1">
     <tr>
