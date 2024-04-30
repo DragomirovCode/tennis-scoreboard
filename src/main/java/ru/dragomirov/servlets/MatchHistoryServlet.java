@@ -1,24 +1,31 @@
 package ru.dragomirov.servlets;
 
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.commons.BaseServlet;
+import ru.dragomirov.dao.MatchesDAO;
+import ru.dragomirov.entities.Matches;
 
-import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "MatchHistoryServlet", urlPatterns = "/matches")
-public class MatchHistoryServlet extends BaseServlet {
-    @Override
-    public void init() {}
+public class MatchHistoryServlet extends HttpServlet {
+    private MatchesDAO matchesDAO = new MatchesDAO();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void init() {
+        matchesDAO = new MatchesDAO();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            // Передаем управление JSP-странице
+            List<Matches> matches = matchesDAO.findAll();
+            req.setAttribute("matches", matches);
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
         } catch (Exception e) {
-            http500Errors(resp, e, "Ошибка при загрузке страницы.");
+            e.printStackTrace();
         }
     }
 }
