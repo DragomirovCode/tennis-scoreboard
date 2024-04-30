@@ -49,6 +49,7 @@
 <!-- Показываем победителя, если он есть -->
 <% if (match.getWinner() != null) { %>
 <h2>Победитель: ${match.winner.name}</h2>
+<a href="${pageContext.request.contextPath}/">Перейти на главную страницу</a>
 <% } %>
 
 

@@ -68,5 +68,9 @@
     <% } %>
 </div>
 
+<br>
+
+<a href="${pageContext.request.contextPath}/">Перейти на главную страницу</a>
+
 </body>
 </html>
