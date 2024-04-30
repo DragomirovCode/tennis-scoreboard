@@ -1,7 +1,6 @@
 package ru.dragomirov.dao;
 
 import ru.dragomirov.commons.HibernateSessionManager;
-import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.entities.Matches;
 import ru.dragomirov.repositories.MatchesRepository;
 
@@ -16,6 +15,16 @@ public class MatchesDAO implements MatchesRepository {
                 "Произошла ошибка при выполнении метода 'findAll'");
     }
 
+    @Override
+    public List<Matches> findMatchesByPlayerName(String name) {
+        return HibernateSessionManager.performSessionQuery(session ->
+                        session.createQuery(
+                                "FROM Matches m WHERE m.player1.name = :name OR m.player2.name = :name", Matches.class)
+                                .setParameter("name", name)
+                                .list(),
+                "Произошла ошибка при выполнении метода 'findMatchesByPlayerName'"
+        );
+    }
     @Override
     public Matches findById(int id) {
         return HibernateSessionManager.performSessionQuery(session -> session.get(Matches.class, id),
