@@ -7,6 +7,12 @@
 </head>
 <body>
 <h1>Список матчей</h1>
+
+<form action="/matches" method="get">
+    <input type="text" name="name" placeholder="Имя игрока">
+    <input type="submit" value="Искать">
+</form>
+
 <table border="1">
     <tr>
         <th>ID</th>
