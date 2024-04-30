@@ -5,17 +5,15 @@
 <head>
     <title>Список матчей</title>
     <style>
-        /* Этот стиль обеспечивает горизонтальное выравнивание */
         .inline-buttons {
             display: inline-block;
-            margin-right: 10px; /* Регулируем расстояние между кнопками */
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
 <h1>Список матчей</h1>
 
-<!-- Контейнер для размещения двух кнопок в одну строку -->
 <div>
     <form action="/matches" method="get" class="inline-buttons">
         <input type="text" name="name" placeholder="Имя игрока">
@@ -38,6 +36,8 @@
 
     <%
         List<Matches> matches = (List<Matches>) request.getAttribute("matches");
+        int currentPage = (int) request.getAttribute("currentPage");
+        boolean hasNextPage = (boolean) request.getAttribute("hasNextPage");
         if (matches != null && !matches.isEmpty()) {
             for (Matches match : matches) {
     %>
@@ -58,5 +58,15 @@
         }
     %>
 </table>
+
+<div>
+    <% if (currentPage > 1) { %>
+    <a href="/matches?page=<%= currentPage - 1 %>">Предыдущая страница</a>
+    <% } %>
+    <% if (hasNextPage) { %>
+    <a href="/matches?page=<%= currentPage + 1 %>">Следующая страница</a>
+    <% } %>
+</div>
+
 </body>
 </html>
