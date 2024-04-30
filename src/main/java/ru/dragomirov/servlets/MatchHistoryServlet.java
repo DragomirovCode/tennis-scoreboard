@@ -12,6 +12,7 @@ import java.util.List;
 @WebServlet(name = "MatchHistoryServlet", urlPatterns = "/matches")
 public class MatchHistoryServlet extends HttpServlet {
     private MatchesDAO matchesDAO = new MatchesDAO();
+    private static final int PAGE_SIZE = 10; // количество матчей на странице
 
     @Override
     public void init() {
@@ -21,7 +22,13 @@ public class MatchHistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            List<Matches> matches = matchesDAO.findAll();
+            String playerName = req.getParameter("name");
+            List<Matches> matches;
+            if (playerName != null && !playerName.isEmpty()) {
+                matches = matchesDAO.findMatchesByPlayerName(playerName);
+            } else {
+                matches = matchesDAO.findAll();
+            }
             req.setAttribute("matches", matches);
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
         } catch (Exception e) {
