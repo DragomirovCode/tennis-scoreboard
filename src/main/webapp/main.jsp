@@ -4,8 +4,8 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/new-match.jsp">Добавить новый матч</a>
+<a href="${pageContext.request.contextPath}/new-match">Добавить новый матч</a>
 <br>
-<a href="/matches.jsp">Посмотреть историю матчей</a>
+<a href="${pageContext.request.contextPath}/matches">Посмотреть историю матчей</a>
 </body>
 </html>
