@@ -16,12 +16,12 @@
 
 <div>
     <form action="/matches" method="get" class="inline-buttons">
-        <input type="text" name="name" placeholder="Имя игрока">
+        <input type="text" name="filter_by_player_name" placeholder="Имя игрока">
         <input type="submit" value="Поиск">
     </form>
 
     <form action="/matches" method="get" class="inline-buttons">
-        <input type="hidden" name="name">
+        <input type="hidden" name="filter_by_player_name">
         <input type="submit" value="Сбросить">
     </form>
 </div>
@@ -38,6 +38,7 @@
         List<Matches> matches = (List<Matches>) request.getAttribute("matches");
         int currentPage = (int) request.getAttribute("currentPage");
         boolean hasNextPage = (boolean) request.getAttribute("hasNextPage");
+        String playerName = (String) request.getAttribute("playerName");
         if (matches != null && !matches.isEmpty()) {
             for (Matches match : matches) {
     %>
@@ -61,10 +62,10 @@
 
 <div>
     <% if (currentPage > 1) { %>
-    <a href="/matches?page=<%= currentPage - 1 %>">Предыдущая страница</a>
+    <a href="/matches?page=<%= currentPage - 1 %><%= playerName != null ? "&filter_by_player_name=" + playerName : "" %>">Предыдущая страница</a>
     <% } %>
     <% if (hasNextPage) { %>
-    <a href="/matches?page=<%= currentPage + 1 %>">Следующая страница</a>
+    <a href="/matches?page=<%= currentPage + 1 %><%= playerName != null ? "&filter_by_player_name=" + playerName : "" %>">Следующая страница</a>
     <% } %>
 </div>
 
