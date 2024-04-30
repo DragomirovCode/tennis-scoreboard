@@ -23,7 +23,7 @@ public class MatchHistoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             // Получаем имя игрока из параметров запроса
-            String playerName = req.getParameter("name");
+            String playerName = req.getParameter("filter_by_player_name");
 
             // Определяем номер текущей страницы (если не задан, то 1)
             int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
@@ -46,6 +46,7 @@ public class MatchHistoryServlet extends HttpServlet {
             req.setAttribute("matches", matches); // Список матчей для отображения
             req.setAttribute("currentPage", page); // Текущая страница
             req.setAttribute("hasNextPage", hasNextPage); // Есть ли следующая страница
+            req.setAttribute("playerName", playerName); // Имя игрока
 
             // Перенаправляем на JSP для отображения
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
