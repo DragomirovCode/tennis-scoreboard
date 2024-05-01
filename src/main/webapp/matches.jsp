@@ -73,5 +73,10 @@
 
 <a href="${pageContext.request.contextPath}/">Перейти на главную страницу</a>
 
+<br>
+<br>
+<br>
+<td>№ страницы: <%= currentPage %></td>
+
 </body>
 </html>
