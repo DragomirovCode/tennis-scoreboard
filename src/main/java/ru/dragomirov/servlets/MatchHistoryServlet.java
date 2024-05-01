@@ -4,19 +4,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.dao.MatchesDAO;
+import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.entities.Matches;
 
 import java.util.List;
 
 @WebServlet(name = "MatchHistoryServlet", urlPatterns = "/matches")
 public class MatchHistoryServlet extends HttpServlet {
-    private MatchesDAO matchesDAO = new MatchesDAO();
+    private HibernateMatchesDAO hibernateMatchesDAO = new HibernateMatchesDAO();
     private static final int PAGE_SIZE = 1;
 
     @Override
     public void init() {
-        matchesDAO = new MatchesDAO();
+        hibernateMatchesDAO = new HibernateMatchesDAO();
     }
 
     @Override
@@ -34,11 +34,11 @@ public class MatchHistoryServlet extends HttpServlet {
             // Запрашиваем на одну запись больше, чем PAGE_SIZE
             long totalMatches;
             if (playerName != null && !playerName.isEmpty()) {
-                matches = matchesDAO.findMatchesByPlayerName(playerName, page, PAGE_SIZE);
-                totalMatches = matchesDAO.countMatchesByPlayerName(playerName);
+                matches = hibernateMatchesDAO.findMatchesByPlayerName(playerName, page, PAGE_SIZE);
+                totalMatches = hibernateMatchesDAO.countMatchesByPlayerName(playerName);
             } else {
-                matches = matchesDAO.findAll(page, PAGE_SIZE);
-                totalMatches = matchesDAO.countMatches();
+                matches = hibernateMatchesDAO.findAll(page, PAGE_SIZE);
+                totalMatches = hibernateMatchesDAO.countMatches();
             }
 
             // Проверяем, есть ли данные для следующей страницы

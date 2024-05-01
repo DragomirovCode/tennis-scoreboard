@@ -1,16 +1,16 @@
 package ru.dragomirov.services;
 
-import ru.dragomirov.dao.MatchesDAO;
+import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
 import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Players;
 
 public class PlayersService {
-    private final MatchesDAO matchesDAO;
+    private final HibernateMatchesDAO hibernateMatchesDAO;
     private final PlayersDAO playersDAO;
 
     public PlayersService() {
-        this.matchesDAO = new MatchesDAO();
+        this.hibernateMatchesDAO = new HibernateMatchesDAO();
         this.playersDAO = new PlayersDAO();
     }
 

@@ -1,6 +1,6 @@
 package ru.dragomirov.services;
 
-import ru.dragomirov.dao.MatchesDAO;
+import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.dao.PlayersDAO;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.MatchesDTOFactory;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class MatchesService {
-    private final MatchesDAO matchesDAO;
+    private final HibernateMatchesDAO hibernateMatchesDAO;
     private final PlayersDAO playersDAO;
     private final PlayersService playersService;
     private final MatchesDTOFactory matchesDTOFactory;
@@ -30,7 +30,7 @@ public class MatchesService {
     }
 
     public MatchesService() {
-        this.matchesDAO = new MatchesDAO();
+        this.hibernateMatchesDAO = new HibernateMatchesDAO();
         this.playersDAO = new PlayersDAO();
         this.playersService = new PlayersService();
         this.matchesDTOFactory = new MatchesDTOFactory();
@@ -133,7 +133,7 @@ public class MatchesService {
         updatedMatch.setPlayer1(playerEntity);
         updatedMatch.setPlayer2(opponentEntity);
 
-        matchesDAO.save(updatedMatch);
+        hibernateMatchesDAO.save(updatedMatch);
     }
 
     public MatchesDTO toDTO(Matches match) {

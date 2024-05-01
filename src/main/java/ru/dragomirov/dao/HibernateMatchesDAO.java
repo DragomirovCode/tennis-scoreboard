@@ -6,7 +6,7 @@ import ru.dragomirov.repositories.MatchesRepository;
 
 import java.util.List;
 
-public class MatchesDAO implements MatchesRepository {
+public class HibernateMatchesDAO implements MatchesRepository {
     private PlayersDAO playersDAO = new PlayersDAO();
 
     @Override
