@@ -1,4 +1,4 @@
 package ru.dragomirov.dao;
 
-public interface CrudDAO {
+public interface CrudDAO<T, ID> {   
 }
