@@ -43,6 +43,17 @@ public class MatchesDAO implements MatchesRepository {
     }
 
     @Override
+    public long countMatchesByPlayerName(String playerName) {
+        return (long) HibernateSessionManager.performSessionQuery(session ->
+                session.createQuery(
+                        "SELECT COUNT(m) FROM Matches m WHERE m.player1.name = :name OR m.player2.name = :name")
+                        .setParameter("name", playerName)
+                        .uniqueResult(),
+                "Произошла ошибка при выполнении метода 'countMatchesByPlayerName'"
+        );
+    }
+
+    @Override
     public Matches findById(int id) {
         return HibernateSessionManager.performSessionQuery(session -> session.get(Matches.class, id),
                 "Произошла ошибка при выполнении метода 'findById'");
