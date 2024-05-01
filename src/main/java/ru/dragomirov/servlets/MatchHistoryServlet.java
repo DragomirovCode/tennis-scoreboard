@@ -32,14 +32,16 @@ public class MatchHistoryServlet extends HttpServlet {
             List<Matches> matches;
 
             // Запрашиваем на одну запись больше, чем PAGE_SIZE
+            long totalMatches;
             if (playerName != null && !playerName.isEmpty()) {
                 matches = matchesDAO.findMatchesByPlayerName(playerName, page, PAGE_SIZE);
+                totalMatches = matchesDAO.countMatchesByPlayerName(playerName);
             } else {
                 matches = matchesDAO.findAll(page, PAGE_SIZE);
+                totalMatches = matchesDAO.countMatches();
             }
 
             // Проверяем, есть ли данные для следующей страницы
-            long totalMatches = matchesDAO.countMatches(); // Новый метод, который возвращает общее количество матчей
             boolean hasNextPage = page * PAGE_SIZE < totalMatches;
 
             // Добавляем атрибуты для запроса
