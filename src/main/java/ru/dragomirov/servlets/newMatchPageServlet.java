@@ -1,5 +1,6 @@
 package ru.dragomirov.servlets;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,17 +24,18 @@ public class newMatchPageServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
             // Передаем управление JSP-странице
             req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
         } catch (Exception e) {
-            http500Errors(resp, e, "Ошибка при загрузке страницы.");
+            req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
             String player1Name = req.getParameter("player1");
             String player2Name = req.getParameter("player2");
@@ -56,7 +58,8 @@ public class newMatchPageServlet extends HttpServlet {
             // Редирект с использованием идентификатора матча
             resp.sendRedirect("/match-score?uuid=" + match.getId());
         } catch (Exception e) {
-            http500Errors(resp, e, "Ошибка при создании матча.");
+            req.setAttribute("errorMessage", "Ошибка при добавлении нового матча.");
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
 }
