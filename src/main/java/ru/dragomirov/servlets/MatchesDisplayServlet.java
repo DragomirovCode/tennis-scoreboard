@@ -5,8 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.entities.Matches;
+import ru.dragomirov.services.MatchesDisplayService;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,12 +17,11 @@ import java.util.List;
  */
 @WebServlet(name = "MatchesDisplayServlet", urlPatterns = "/matches")
 public class MatchesDisplayServlet extends HttpServlet {
-    private HibernateMatchesDAO hibernateMatchesDAO = new HibernateMatchesDAO();
-    private static final int PAGE_SIZE = 1;
+    private MatchesDisplayService matchesDisplayService;
 
     @Override
     public void init() {
-        this.hibernateMatchesDAO = new HibernateMatchesDAO();
+        this.matchesDisplayService = new MatchesDisplayService();
     }
 
     @Override
@@ -32,19 +31,11 @@ public class MatchesDisplayServlet extends HttpServlet {
 
             int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
 
-            List<Matches> matches;
+            List<Matches> matches = matchesDisplayService.getMatches(playerName, page);
 
-            long totalMatches;
-            if (playerName != null && !playerName.isEmpty()) {
-                matches = hibernateMatchesDAO.findMatchesByPlayerName(playerName, page, PAGE_SIZE);
-                totalMatches = hibernateMatchesDAO.countMatchesByPlayerName(playerName);
-            } else {
-                matches = hibernateMatchesDAO.findAll(page, PAGE_SIZE);
-                totalMatches = hibernateMatchesDAO.countMatches();
-            }
+            long totalMatches = matchesDisplayService.getTotalMatches(playerName);
 
-            // Проверяем, есть ли данные для следующей страницы
-            boolean hasNextPage = page * PAGE_SIZE < totalMatches;
+            boolean hasNextPage = matchesDisplayService.hasNextPage(page, totalMatches);
 
             req.setAttribute("matches", matches);
             req.setAttribute("currentPage", page);
