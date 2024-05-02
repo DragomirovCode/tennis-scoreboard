@@ -1,5 +1,6 @@
 package ru.dragomirov.servlets;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.entities.Matches;
 
+import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "MatchHistoryServlet", urlPatterns = "/matches")
@@ -20,7 +22,7 @@ public class MatchHistoryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             // Получаем имя игрока из параметров запроса
             String playerName = req.getParameter("filter_by_player_name");
@@ -53,9 +55,8 @@ public class MatchHistoryServlet extends HttpServlet {
             // Перенаправляем на JSP для отображения
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
-
-
 }
