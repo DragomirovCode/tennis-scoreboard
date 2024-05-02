@@ -11,8 +11,8 @@ import ru.dragomirov.entities.Matches;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "MatchHistoryServlet", urlPatterns = "/matches")
-public class MatchHistoryServlet extends HttpServlet {
+@WebServlet(name = "MatchesDisplayServlet", urlPatterns = "/matches")
+public class MatchesDisplayServlet extends HttpServlet {
     private HibernateMatchesDAO hibernateMatchesDAO = new HibernateMatchesDAO();
     private static final int PAGE_SIZE = 1;
 
