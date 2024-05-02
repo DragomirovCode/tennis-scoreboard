@@ -21,7 +21,7 @@ public class MainPageServlet extends HttpServlet {
         } catch (Exception e) {
             // Перенаправляем на страницу ошибки
             req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
-            req.getRequestDispatcher("/errors/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
 }
