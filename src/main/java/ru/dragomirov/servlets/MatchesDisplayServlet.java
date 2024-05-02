@@ -11,6 +11,10 @@ import ru.dragomirov.entities.Matches;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * MatchesDisplayServlet используется для отображения списка матчей,
+ * включая их идентификатор, имена игроков и победителя.
+ */
 @WebServlet(name = "MatchesDisplayServlet", urlPatterns = "/matches")
 public class MatchesDisplayServlet extends HttpServlet {
     private HibernateMatchesDAO hibernateMatchesDAO = new HibernateMatchesDAO();
@@ -24,16 +28,12 @@ public class MatchesDisplayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            // Получаем имя игрока из параметров запроса
             String playerName = req.getParameter("filter_by_player_name");
 
-            // Определяем номер текущей страницы (если не задан, то 1)
             int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
 
-            // Список матчей, который будет возвращен в ответе
             List<Matches> matches;
 
-            // Запрашиваем на одну запись больше, чем PAGE_SIZE
             long totalMatches;
             if (playerName != null && !playerName.isEmpty()) {
                 matches = hibernateMatchesDAO.findMatchesByPlayerName(playerName, page, PAGE_SIZE);
@@ -46,13 +46,11 @@ public class MatchesDisplayServlet extends HttpServlet {
             // Проверяем, есть ли данные для следующей страницы
             boolean hasNextPage = page * PAGE_SIZE < totalMatches;
 
-            // Добавляем атрибуты для запроса
-            req.setAttribute("matches", matches); // Список матчей для отображения
-            req.setAttribute("currentPage", page); // Текущая страница
-            req.setAttribute("hasNextPage", hasNextPage); // Есть ли следующая страница
-            req.setAttribute("playerName", playerName); // Имя игрока
+            req.setAttribute("matches", matches);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("hasNextPage", hasNextPage);
+            req.setAttribute("playerName", playerName);
 
-            // Перенаправляем на JSP для отображения
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
         } catch (Exception e) {
             req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
