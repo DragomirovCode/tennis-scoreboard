@@ -1,7 +1,7 @@
 package ru.dragomirov.services;
 
 import ru.dragomirov.dao.HibernateMatchesDAO;
-import ru.dragomirov.dao.PlayersDAO;
+import ru.dragomirov.dao.HibernatePlayersDAO;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.MatchesDTOFactory;
 import ru.dragomirov.dto.PlayersDTO;
@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
 
 public class MatchesService {
     private final HibernateMatchesDAO hibernateMatchesDAO;
-    private final PlayersDAO playersDAO;
+    private final HibernatePlayersDAO hibernatePlayersDAO;
     private final PlayersService playersService;
     private final MatchesDTOFactory matchesDTOFactory;
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
@@ -31,7 +31,7 @@ public class MatchesService {
 
     public MatchesService() {
         this.hibernateMatchesDAO = new HibernateMatchesDAO();
-        this.playersDAO = new PlayersDAO();
+        this.hibernatePlayersDAO = new HibernatePlayersDAO();
         this.playersService = new PlayersService();
         this.matchesDTOFactory = new MatchesDTOFactory();
     }
@@ -123,8 +123,8 @@ public class MatchesService {
         Players playerEntity = playersService.toEntity(player);
         Players opponentEntity = playersService.toEntity(opponent);
 
-        playersDAO.save(playerEntity);
-        playersDAO.save(opponentEntity);
+        hibernatePlayersDAO.save(playerEntity);
+        hibernatePlayersDAO.save(opponentEntity);
 
         PlayersDTO players1 = playersService.toDTO(playerEntity);
         match.setWinner(players1);

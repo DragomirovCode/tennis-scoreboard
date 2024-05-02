@@ -1,13 +1,12 @@
 package ru.dragomirov.dao;
 
-import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Players;
 import ru.dragomirov.repositories.PlayersRepository;
 import ru.dragomirov.commons.HibernateSessionManager;
 
 import java.util.List;
 
-public class PlayersDAO implements PlayersRepository {
+public class HibernatePlayersDAO implements PlayersRepository {
     @Override
     public List<Players> findAll() {
         return HibernateSessionManager.performSessionQuery(session -> session.createQuery("FROM Players", Players.class).list(),
