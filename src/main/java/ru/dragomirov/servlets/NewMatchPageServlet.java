@@ -12,8 +12,8 @@ import ru.dragomirov.dto.PlayersDTOFactory;
 
 import java.io.IOException;
 
-@WebServlet(name = "newMatchPageServlet", urlPatterns = "/new-match")
-public class newMatchPageServlet extends HttpServlet {
+@WebServlet(name = "NewMatchPageServlet", urlPatterns = "/new-match")
+public class NewMatchPageServlet extends HttpServlet {
     private MatchesDTOFactory matchesDTOFactory;
     private PlayersDTOFactory playersDTOFactory;
 
