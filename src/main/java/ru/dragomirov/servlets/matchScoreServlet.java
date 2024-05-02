@@ -1,5 +1,6 @@
 package ru.dragomirov.servlets;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class matchScoreServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
             // Получаем идентификатор матча из строки запроса
             String uuidStr = req.getParameter("uuid");
@@ -53,12 +54,13 @@ public class matchScoreServlet extends HttpServlet {
             req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
 
         } catch (Exception e) {
-            http500Errors(resp, e, "Ошибка при загрузке страницы.");
+            req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
             // Получаем идентификатор матча
             String uuidStr = req.getParameter("uuid");
@@ -107,9 +109,8 @@ public class matchScoreServlet extends HttpServlet {
             // Редирект с использованием идентификатора матча
             resp.sendRedirect("/match-score?uuid=" + match.getId());
         } catch (Exception e) {
-            // В случае ошибки
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write("Ошибка при обработке запроса.");
+            req.setAttribute("errorMessage", "Ошибка при добавлении очков.");
+            req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
     }
 }
