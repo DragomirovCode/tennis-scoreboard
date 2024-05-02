@@ -5,6 +5,9 @@ import ru.dragomirov.entities.Matches;
 
 import java.util.List;
 
+/**
+ * MatchesDisplayService реализует бизнес логику MatchesDisplayServlet
+ */
 public class MatchesDisplayService {
     private final HibernateMatchesDAO hibernateMatchesDAO;
     private static final int PAGE_SIZE = 1;
