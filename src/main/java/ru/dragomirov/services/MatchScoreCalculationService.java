@@ -1,5 +1,6 @@
 package ru.dragomirov.services;
 
+import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class MatchScoreCalculationService {
+    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService;
     private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
 
     {
@@ -19,9 +21,13 @@ public class MatchScoreCalculationService {
         scoreHandlers.put("AD:AD", this::winGameAndReset);
     }
 
-    public void addPointsToPlayers(PlayersDTO player, PlayersDTO opponent) {
+    public MatchScoreCalculationService() {
+        finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
+    }
+
+    public void addPointsToPlayers(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
         if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
-            handleTieBreak(player, opponent);
+            handleTieBreak(match, player, opponent);
             return;
         }
 
@@ -31,7 +37,7 @@ public class MatchScoreCalculationService {
         } else {
             addPoint(player);
         } if (player.getSet() == 1) {
-            handleSetWin(player, opponent);
+            finishedMatchesPersistenceService.handleSetWin(match, player, opponent);
         }
     }
 
@@ -60,14 +66,14 @@ public class MatchScoreCalculationService {
         }
     }
 
-    private void handleTieBreak(PlayersDTO player, PlayersDTO opponent) {
+    private void handleTieBreak(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
         player.setScore(String.valueOf(Integer.parseInt(player.getScore()) + 1));
         if (Integer.parseInt(player.getScore()) >= 7 &&
                 (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
             resetScoreAfterWinning(player, opponent);
-            handleSetWin(player, opponent);
+            finishedMatchesPersistenceService.handleSetWin(match, player, opponent);
         }
     }
 
@@ -100,11 +106,5 @@ public class MatchScoreCalculationService {
     private void resetGamesAfterWinning(PlayersDTO player, PlayersDTO opponent) {
         player.setGamesWon(0);
         opponent.setGamesWon(0);
-    }
-
-    private void handleSetWin(PlayersDTO player, PlayersDTO opponent) {
-        player.setSet(player.getSet() + 1);
-        resetGamesAfterWinning(player, opponent);
-        resetScoreAfterWinning(player, opponent);
     }
 }
