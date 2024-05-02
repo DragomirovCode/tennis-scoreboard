@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
- * Реализует логику подсчёта счёта матча по очкам/геймам/сетам
+ * MatchScoreCalculationService реализует логику подсчёта счёта матча по очкам/геймам/сетам
  */
 public class MatchScoreCalculationService {
     private final FinishedMatchesPersistenceService finishedMatchesPersistenceService;

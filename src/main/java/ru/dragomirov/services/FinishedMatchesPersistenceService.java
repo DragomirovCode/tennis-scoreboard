@@ -9,7 +9,7 @@ import ru.dragomirov.entities.Matches;
 import ru.dragomirov.entities.Players;
 
 /**
- * Инкапсулирует запись законченных матчей в БД
+ * FinishedMatchesPersistenceService инкапсулирует запись законченных матчей в БД
  */
 public class FinishedMatchesPersistenceService {
     private final HibernateMatchesDAO hibernateMatchesDAO;
