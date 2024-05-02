@@ -10,8 +10,8 @@ import ru.dragomirov.services.MatchScoreCalculationService;
 
 import java.io.IOException;
 
-@WebServlet(name = "matchScoreServlet", urlPatterns = "/match-score")
-public class matchScoreServlet extends HttpServlet {
+@WebServlet(name = "MatchScoreServlet", urlPatterns = "/match-score")
+public class MatchScoreServlet extends HttpServlet {
     private MatchScoreCalculationService matchesService;
     @Override
     public void init() {
