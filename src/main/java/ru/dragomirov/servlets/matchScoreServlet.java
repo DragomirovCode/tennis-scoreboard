@@ -6,16 +6,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.dragomirov.dto.MatchesDTO;
-import ru.dragomirov.services.MatchesService;
+import ru.dragomirov.services.MatchScoreCalculationService;
 
 import java.io.IOException;
 
 @WebServlet(name = "matchScoreServlet", urlPatterns = "/match-score")
 public class matchScoreServlet extends HttpServlet {
-    private MatchesService matchesService;
+    private MatchScoreCalculationService matchesService;
     @Override
     public void init() {
-        matchesService = new MatchesService();
+        matchesService = new MatchScoreCalculationService();
     }
 
     @Override
