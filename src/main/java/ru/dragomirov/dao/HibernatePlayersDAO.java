@@ -1,46 +1,34 @@
 package ru.dragomirov.dao;
 
 import ru.dragomirov.entities.Players;
-import ru.dragomirov.repositories.PlayersRepository;
-import ru.dragomirov.commons.HibernateSessionManager;
 
 import java.util.List;
+import java.util.Optional;
 
-public class HibernatePlayersDAO implements PlayersRepository {
+public class HibernatePlayersDAO implements CrudDAO<Players, Integer> {
+
+    @Override
+    public Optional<Players> findById(Integer integer) {
+        return Optional.empty();
+    }
+
     @Override
     public List<Players> findAll() {
-        return HibernateSessionManager.performSessionQuery(session -> session.createQuery("FROM Players", Players.class).list(),
-                "Произошла ошибка при выполнении метода 'findAll'");
+        return null;
     }
 
     @Override
-    public Players findById(int id) {
-        return HibernateSessionManager.performSessionQuery(session -> session.get(Players.class, id),
-                "Произошла ошибка при выполнении метода 'findById'");
+    public void save(Players entity) {
+
     }
 
     @Override
-    public Players findByName(String name) {
-        return HibernateSessionManager.performSessionQuery(session ->
-                        session.createQuery("FROM Players WHERE name = :name", Players.class)
-                                .setParameter("name", name)
-                                .uniqueResult(),
-                "Произошла ошибка при выполнении метода 'findByName'"
-        );
+    public Optional<Players> update(Players entity) {
+        return Optional.empty();
     }
 
     @Override
-    public void save(Players player) {
-        HibernateSessionManager.performTransaction(session -> session.save(player));
-    }
+    public void delete(Integer integer) {
 
-    @Override
-    public void update(Players player) {
-        HibernateSessionManager.performTransaction(session -> session.update(player));
-    }
-
-    @Override
-    public void delete(Players player) {
-        HibernateSessionManager.performTransaction(session -> session.delete(player));
     }
 }
