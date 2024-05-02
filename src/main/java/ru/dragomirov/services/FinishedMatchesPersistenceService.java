@@ -1,5 +1,6 @@
 package ru.dragomirov.services;
 
+import org.modelmapper.ModelMapper;
 import ru.dragomirov.dao.HibernateMatchesDAO;
 import ru.dragomirov.dao.HibernatePlayersDAO;
 import ru.dragomirov.dto.MatchesDTO;
@@ -11,11 +12,13 @@ public class FinishedMatchesPersistenceService {
     private final HibernateMatchesDAO hibernateMatchesDAO;
     private final HibernatePlayersDAO hibernatePlayersDAO;
     private final PlayersService playersService;
+    private final ModelMapper modelMapper;
 
     public FinishedMatchesPersistenceService() {
         hibernateMatchesDAO = new HibernateMatchesDAO();
         hibernatePlayersDAO = new HibernatePlayersDAO();
         playersService = new PlayersService();
+        modelMapper = new ModelMapper();
     }
 
     public void handleSetWin(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
@@ -45,11 +48,6 @@ public class FinishedMatchesPersistenceService {
     }
 
     public Matches toEntity(MatchesDTO matchesDTO) {
-        Matches matches = new Matches();
-        matches.setId(matchesDTO.getId());
-        matches.setPlayer1(playersService.toEntity(matchesDTO.getPlayer1()));
-        matches.setPlayer2(playersService.toEntity(matchesDTO.getPlayer2()));
-        matches.setWinner(playersService.toEntity(matchesDTO.getWinner()));
-        return matches;
+        return modelMapper.map(matchesDTO, Matches.class);
     }
 }
