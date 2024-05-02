@@ -2,13 +2,11 @@ package ru.dragomirov.dao;
 
 import ru.dragomirov.commons.HibernateSessionManager;
 import ru.dragomirov.entities.Matches;
-import ru.dragomirov.repositories.MatchesRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public class HibernateMatchesDAO implements MatchesRepository {
-    private PlayersDAO playersDAO = new PlayersDAO();
-
+public class HibernateMatchesDAO implements MatchesDAO {
     @Override
     public List<Matches> findAll(int page, int pageSize) {
         return HibernateSessionManager.performSessionQuery(session -> session.createQuery("FROM Matches", Matches.class)
@@ -54,23 +52,28 @@ public class HibernateMatchesDAO implements MatchesRepository {
     }
 
     @Override
-    public Matches findById(int id) {
-        return HibernateSessionManager.performSessionQuery(session -> session.get(Matches.class, id),
-                "Произошла ошибка при выполнении метода 'findById'");
+    public Optional<Matches> findById(Integer id) {
+        return Optional.ofNullable(HibernateSessionManager.performSessionQuery(session -> session.get(Matches.class, id),
+                "Произошла ошибка при выполнении метода 'findById'"));
     }
 
     @Override
-    public void save(Matches matches) {
-        HibernateSessionManager.performTransaction(session -> session.save(matches));
+    public List<Matches> findAll() {
+        return null;
     }
 
     @Override
-    public void update(Matches matches) {
-        HibernateSessionManager.performTransaction(session -> session.update(matches));
+    public void save(Matches entity) {
+        HibernateSessionManager.performTransaction(session -> session.save(entity));
     }
 
     @Override
-    public void delete(Matches matches) {
-        HibernateSessionManager.performTransaction(session -> session.delete(matches));
+    public Optional<Matches> update(Matches entity) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void delete(Integer integer) {
+        HibernateSessionManager.performTransaction(session -> session.delete(integer));
     }
 }
