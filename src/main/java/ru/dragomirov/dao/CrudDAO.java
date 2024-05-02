@@ -8,7 +8,7 @@ public interface CrudDAO<T, ID> {
 
     List<T> findAll();
 
-    T save(T entity);
+    void save(T entity);
 
     Optional<T> update(T entity);
 
