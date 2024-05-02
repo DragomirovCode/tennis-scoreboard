@@ -1,9 +1,9 @@
 package ru.dragomirov.servlets;
 
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.commons.BaseServlet;
 import ru.dragomirov.dto.MatchesDTOFactory;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.dto.PlayersDTO;
@@ -12,7 +12,7 @@ import ru.dragomirov.dto.PlayersDTOFactory;
 import java.io.IOException;
 
 @WebServlet(name = "newMatchPageServlet", urlPatterns = "/new-match")
-public class newMatchPageServlet extends BaseServlet {
+public class newMatchPageServlet extends HttpServlet {
     private MatchesDTOFactory matchesDTOFactory;
     private PlayersDTOFactory playersDTOFactory;
 
