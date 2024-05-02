@@ -22,7 +22,7 @@ public class MatchScoreCalculationService {
     }
 
     public MatchScoreCalculationService() {
-        finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
+        this.finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
     }
 
     public void addPointsToPlayers(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {

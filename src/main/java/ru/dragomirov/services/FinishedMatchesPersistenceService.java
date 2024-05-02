@@ -15,10 +15,10 @@ public class FinishedMatchesPersistenceService {
     private final ModelMapper modelMapper;
 
     public FinishedMatchesPersistenceService() {
-        hibernateMatchesDAO = new HibernateMatchesDAO();
-        hibernatePlayersDAO = new HibernatePlayersDAO();
-        playersService = new PlayersService();
-        modelMapper = new ModelMapper();
+        this.hibernateMatchesDAO = new HibernateMatchesDAO();
+        this.hibernatePlayersDAO = new HibernatePlayersDAO();
+        this.playersService = new PlayersService();
+        this.modelMapper = new ModelMapper();
     }
 
     public void handleSetWin(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
