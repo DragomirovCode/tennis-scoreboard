@@ -1,16 +1,16 @@
 package ru.dragomirov.servlets;
 
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.commons.BaseServlet;
 import ru.dragomirov.dto.MatchesDTO;
 import ru.dragomirov.services.MatchesService;
 
 import java.io.IOException;
 
 @WebServlet(name = "matchScoreServlet", urlPatterns = "/match-score")
-public class matchScoreServlet extends BaseServlet {
+public class matchScoreServlet extends HttpServlet {
     private MatchesService matchesService;
     @Override
     public void init() {
