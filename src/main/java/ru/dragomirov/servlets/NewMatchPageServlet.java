@@ -23,8 +23,8 @@
     
         @Override
         public void init() {
-            matchesDTOFactory = new MatchesDTOFactory();
-            playersDTOFactory = new PlayersDTOFactory();
+            this.matchesDTOFactory = new MatchesDTOFactory();
+            this.playersDTOFactory = new PlayersDTOFactory();
         }
     
         @Override

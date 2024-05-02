@@ -22,7 +22,7 @@ public class MatchesDisplayServlet extends HttpServlet {
 
     @Override
     public void init() {
-        hibernateMatchesDAO = new HibernateMatchesDAO();
+        this.hibernateMatchesDAO = new HibernateMatchesDAO();
     }
 
     @Override

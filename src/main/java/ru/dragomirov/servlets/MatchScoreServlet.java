@@ -19,7 +19,7 @@ public class MatchScoreServlet extends HttpServlet {
     private MatchScoreCalculationService matchesService;
     @Override
     public void init() {
-        matchesService = new MatchScoreCalculationService();
+        this.matchesService = new MatchScoreCalculationService();
     }
 
     @Override
