@@ -12,12 +12,10 @@ public class FinishedMatchesPersistenceService {
     private final HibernatePlayersDAO hibernatePlayersDAO;
     private final PlayersService playersService;
 
-    public FinishedMatchesPersistenceService(HibernateMatchesDAO hibernateMatchesDAO,
-                                             HibernatePlayersDAO hibernatePlayersDAO,
-                                             PlayersService playersService) {
-        this.hibernateMatchesDAO = hibernateMatchesDAO;
-        this.hibernatePlayersDAO = hibernatePlayersDAO;
-        this.playersService = playersService;
+    public FinishedMatchesPersistenceService() {
+        hibernateMatchesDAO = new HibernateMatchesDAO();
+        hibernatePlayersDAO = new HibernatePlayersDAO();
+        playersService = new PlayersService();
     }
 
     public void handleSetWin(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
