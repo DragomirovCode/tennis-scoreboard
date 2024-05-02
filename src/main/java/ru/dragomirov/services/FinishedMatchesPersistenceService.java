@@ -39,12 +39,7 @@ public class FinishedMatchesPersistenceService {
     }
 
     public MatchesDTO toDTO(Matches match) {
-        MatchesDTO dto = new MatchesDTO();
-        dto.setId(match.getId());
-        dto.setPlayer1(playersService.toDTO(match.getPlayer1()));
-        dto.setPlayer2(playersService.toDTO(match.getPlayer2()));
-        dto.setWinner(playersService.toDTO(match.getWinner()));
-        return dto;
+        return modelMapper.map(match, MatchesDTO.class);
     }
 
     public Matches toEntity(MatchesDTO matchesDTO) {
