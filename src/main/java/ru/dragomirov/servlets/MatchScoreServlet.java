@@ -10,6 +10,10 @@ import ru.dragomirov.services.MatchScoreCalculationService;
 
 import java.io.IOException;
 
+/**
+ * MatchScoreServlet используется для обрабатывание запросов, связанные с очками матча,
+ * включая получение и обновление данных о результатах.
+ */
 @WebServlet(name = "MatchScoreServlet", urlPatterns = "/match-score")
 public class MatchScoreServlet extends HttpServlet {
     private MatchScoreCalculationService matchesService;
@@ -21,7 +25,6 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
-            // Получаем идентификатор матча из строки запроса
             String uuidStr = req.getParameter("uuid");
 
             if (uuidStr == null) {
@@ -49,7 +52,6 @@ public class MatchScoreServlet extends HttpServlet {
                 return;
             }
 
-            // Передаем объект в JSP-страницу
             req.setAttribute("match", match);
             req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
 
@@ -62,7 +64,6 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
-            // Получаем идентификатор матча
             String uuidStr = req.getParameter("uuid");
             if (uuidStr == null) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -106,7 +107,6 @@ public class MatchScoreServlet extends HttpServlet {
             // Сохраняем изменения в сессии и отправляем успешный ответ
             req.getSession().setAttribute("match", match);
 
-            // Редирект с использованием идентификатора матча
             resp.sendRedirect("/match-score?uuid=" + match.getId());
         } catch (Exception e) {
             req.setAttribute("errorMessage", "Ошибка при добавлении очков.");
