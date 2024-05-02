@@ -1,4 +1,6 @@
 package ru.dragomirov.dao;
 
-public interface PlayersDAO {
+import ru.dragomirov.entities.Players;
+
+public interface PlayersDAO extends CrudDAO<Players, Integer> {
 }
