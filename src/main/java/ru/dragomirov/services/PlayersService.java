@@ -4,6 +4,10 @@ import org.modelmapper.ModelMapper;
 import ru.dragomirov.dto.PlayersDTO;
 import ru.dragomirov.entities.Players;
 
+/**
+ * PlayersService обеспечивает преобразование между объектами модели "Players"
+ * и их представлениями в виде DTO (Data Transfer Object).
+ */
 public class PlayersService {
     private final ModelMapper modelMapper;
 
