@@ -8,6 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * MainPageServlet используется в качестве начальной точки
+ * входа в веб-приложение, где пользователь может получить доступ
+ * к различным разделам сайта или начать навигацию.
+ */
 @WebServlet(name = "MainPageServlet", urlPatterns = "/")
 public class MainPageServlet extends HttpServlet {
     @Override
@@ -16,10 +21,8 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
-            // Передаем управление JSP-странице
             req.getRequestDispatcher("/main.jsp").forward(req, resp);
         } catch (Exception e) {
-            // Перенаправляем на страницу ошибки
             req.setAttribute("errorMessage", "Ошибка при загрузке страницы.");
             req.getRequestDispatcher("/errors/serverError.jsp").forward(req, resp);
         }
