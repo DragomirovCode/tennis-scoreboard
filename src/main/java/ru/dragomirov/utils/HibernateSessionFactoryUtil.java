@@ -9,7 +9,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.dragomirov.entities.Matches;
 import ru.dragomirov.entities.Players;
 
-
+/**
+ * HibernateSessionFactoryUtil используется для создания и управления сессиями Hibernate.
+ * Этот класс использует HikariCP в качестве пула соединений для улучшения производительности.
+ * Он также предоставляет методы для получения и закрытия SessionFactory.
+ */
 public class HibernateSessionFactoryUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
