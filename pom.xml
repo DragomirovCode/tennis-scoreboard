@@ -20,6 +20,7 @@
         <lombok.version>1.18.30</lombok.version>
         <servlet.version>6.0.0</servlet.version>
         <modelmapper.version>2.4.4</modelmapper.version>
+        <HikariCP.version>4.0.3</HikariCP.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,12 @@
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${HikariCP.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
