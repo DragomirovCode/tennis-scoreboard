@@ -4,6 +4,9 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import org.h2.tools.Server;
 
+/**
+ * H2ServerInitializerUtil используется для инициализации и остановки сервера H2 в контексте веб-приложения.
+ */
 public class H2ServerInitializerUtil implements ServletContextListener {
     private Server webServer;
     @Override
