@@ -30,7 +30,7 @@ public class HibernateSessionFactoryUtil {
             Configuration configuration = new Configuration();
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
             configuration.setProperty("hibernate.show_sql", "true");
-            configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+            configuration.setProperty("hibernate.hbm2ddl.auto", "create-drop");
             configuration.addAnnotatedClass(Players.class);
             configuration.addAnnotatedClass(Matches.class);
 
