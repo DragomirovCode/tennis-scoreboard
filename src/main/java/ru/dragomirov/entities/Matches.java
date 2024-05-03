@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Table(name = "Matches")
 public class Matches {
     @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
