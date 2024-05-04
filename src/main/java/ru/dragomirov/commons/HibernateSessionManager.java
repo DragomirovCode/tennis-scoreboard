@@ -2,19 +2,30 @@ package ru.dragomirov.commons;
 import org.hibernate.Session;
 import ru.dragomirov.utils.HibernateSessionFactoryUtil;
 
+/**
+ * HibernateSessionManager используется для управления сессиями Hibernate.
+ * Он предоставляет функциональные интерфейсы и методы для выполнения запросов к базе данных и транзакций.
+ *
+ * @SessionQuery<T> используется для выполнения операции с сеансом Hibernate и возвращает результат типа T.
+ *
+ * @TransactionOperation используется для выполнения транзакционных операций без возвращения результата.
+ *
+ * @performSessionQuery(SessionQuery<T> sessionQuery, String errorMessage)
+ * используется для выполнения запроса к базе данных с использованием сеанса Hibernate.
+ *
+ * @performTransaction(TransactionOperation transactionOperation)
+ * используется для выполнения транзакции с использованием сеанса Hibernate.
+ * Он начинает транзакцию, выполняет операцию и затем фиксирует транзакцию.
+ */
 public class HibernateSessionManager {
-
-    // Функциональный интерфейс для выполнения операции с сеансом Hibernate
     public interface SessionQuery<T> {
         T execute(Session session);
     }
 
-    // Функциональный интерфейс для выполнения транзакционных операций
     public interface TransactionOperation {
         void execute(Session session);
     }
 
-    // Метод для выполнения запроса к базе данных с использованием сеанса Hibernate
     public static <T> T performSessionQuery(SessionQuery<T> sessionQuery, String errorMessage) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return sessionQuery.execute(session);
@@ -24,7 +35,6 @@ public class HibernateSessionManager {
         }
     }
 
-    // Метод для выполнения транзакции с использованием сеанса Hibernate
     public static void performTransaction(TransactionOperation transactionOperation) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         session.beginTransaction();
