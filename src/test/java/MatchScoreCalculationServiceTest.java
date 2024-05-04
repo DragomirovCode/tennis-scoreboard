@@ -7,6 +7,20 @@ import ru.dragomirov.dto.PlayersDTOFactory;
 import ru.dragomirov.services.MatchScoreCalculationService;
 
 public class MatchScoreCalculationServiceTest {
+    private MatchesDTO setupMatch(String playerScore, int playerGamesWon, int playerSet,
+                                  String opponentScore, int opponentGamesWon, int opponentSet) {
+        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
+        PlayersDTO player = playersDTOFactory.createPlayers("player", playerScore);
+        player.setGamesWon(playerGamesWon);
+        player.setSet(playerSet);
+        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", opponentScore);
+        opponent.setGamesWon(opponentGamesWon);
+        opponent.setSet(opponentSet);
+
+        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
+        return matchesDTOFactory.createMatches(player, opponent);
+    }
+
     @Test
     public void shouldContinueGameAfterDeuce(){
         PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
