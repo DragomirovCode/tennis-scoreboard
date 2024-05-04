@@ -58,20 +58,14 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldStartNewSetAfterEightSix(){
-        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
-        PlayersDTO player = playersDTOFactory.createPlayers("player", "7");
-        player.setGamesWon(6);
-        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "6");
-        opponent.setGamesWon(6);
-
-        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
-        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+        MatchesDTO matches = setupMatch("7", 6, 0,
+                "6", 6, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
-        service.addPointsToPlayers(matches, player, opponent);
+        service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
 
-        Assertions.assertEquals(1, player.getSet());
-        Assertions.assertEquals("0", player.getScore());
+        Assertions.assertEquals(1, matches.getPlayer1().getSet());
+        Assertions.assertEquals("0", matches.getPlayer1().getScore());
     }
 
     @Test
