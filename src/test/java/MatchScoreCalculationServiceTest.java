@@ -73,4 +73,20 @@ public class MatchScoreCalculationServiceTest {
         Assertions.assertEquals(1, player.getSet());
         Assertions.assertEquals("0", player.getScore());
     }
+
+    @Test
+    public void shouldWinGameAfterAdvantage(){
+        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
+        PlayersDTO player = playersDTOFactory.createPlayers("player", "AD");
+        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "40");
+
+        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
+        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+
+        MatchScoreCalculationService service = new MatchScoreCalculationService();
+        service.addPointsToPlayers(matches, player, opponent);
+
+        Assertions.assertEquals(1, player.getGamesWon());
+        Assertions.assertEquals("0", player.getScore());
+    }
 }
