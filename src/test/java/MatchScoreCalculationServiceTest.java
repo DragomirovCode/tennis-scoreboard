@@ -47,19 +47,13 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldStartTiebreakAtSixAll(){
-        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
-        PlayersDTO player = playersDTOFactory.createPlayers("player", "0");
-        player.setGamesWon(6);
-        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "0");
-        opponent.setGamesWon(6);
-
-        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
-        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+        MatchesDTO matches = setupMatch("0", 6, 0,
+                "0", 6, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
-        service.addPointsToPlayers(matches, player, opponent);
+        service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
 
-        Assertions.assertEquals("1", player.getScore());
+        Assertions.assertEquals("1", matches.getPlayer1().getScore());
     }
 
     @Test
