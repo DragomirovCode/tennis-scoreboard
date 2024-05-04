@@ -39,7 +39,7 @@ public class MatchScoreCalculationService {
             scoreHandlers.get(scoreKey).accept(player, opponent);
         } else {
             addPoint(player);
-        } if (player.getSet() == 1) {
+        } if (player.getSet() == 3) {
             finishedMatchesPersistenceService.handleSetWin(match, player, opponent);
         }
     }
