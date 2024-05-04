@@ -26,22 +26,10 @@ public class HibernateSessionManager {
 
     // Метод для выполнения транзакции с использованием сеанса Hibernate
     public static void performTransaction(TransactionOperation transactionOperation) {
-        Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            transactionOperation.execute(session);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-            throw new RuntimeException("Транзакция завершилась неудачей", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        transactionOperation.execute(session);
+        session.getTransaction().commit();
+        session.close();
     }
 }
