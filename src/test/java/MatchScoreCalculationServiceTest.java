@@ -35,6 +35,7 @@ public class MatchScoreCalculationServiceTest {
         MatchScoreCalculationService service = new MatchScoreCalculationService();
         service.addPointsToPlayers(matches, player, opponent);
 
+        Assertions.assertEquals("0", player.getScore());
         Assertions.assertEquals(1, player.getGamesWon());
     }
 
