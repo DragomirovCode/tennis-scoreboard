@@ -22,13 +22,21 @@ Tennis Scoreboard — это клиент-серверное веб-прилож
 
 ### Что используется в проекте
 Java - коллекции, ООП
+
 Паттерн MVC(S)
+
 Maven
+
 Java сервлеты
+
 Веб - GET и POST запросы, формы
+
 Java Servlets, JSP
+
 Базы данных - SQL, Hibernate, H2 (in-memory SQL database)
+
 Frontend - HTML/CSS, блочная вёрстка
+
 Тесты - юнит тестирование, JUnit 5
 
 
