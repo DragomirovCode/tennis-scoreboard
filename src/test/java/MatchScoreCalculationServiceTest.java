@@ -36,4 +36,21 @@ public class MatchScoreCalculationServiceTest {
 
         Assertions.assertEquals(1, player.getGamesWon());
     }
+
+    @Test
+    public void shouldStartTiebreakAtSixAll(){
+        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
+        PlayersDTO player = playersDTOFactory.createPlayers("player", "0");
+        player.setGamesWon(6);
+        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "0");
+        opponent.setGamesWon(6);
+
+        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
+        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+
+        MatchScoreCalculationService service = new MatchScoreCalculationService();
+        service.addPointsToPlayers(matches, player, opponent);
+
+        Assertions.assertEquals("1", player.getScore());
+    }
 }
