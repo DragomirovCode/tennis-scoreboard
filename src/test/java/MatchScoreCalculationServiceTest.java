@@ -23,18 +23,14 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldContinueGameAfterDeuce(){
-        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
-        PlayersDTO player = playersDTOFactory.createPlayers("player", "40");
-        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "40");
-
-        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
-        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+        MatchesDTO matches = setupMatch("40", 0, 0,
+                "40", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
-        service.addPointsToPlayers(matches, player, opponent);
+        service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
 
-        Assertions.assertEquals("AD", player.getScore());
-        Assertions.assertEquals(0, player.getGamesWon());
+        Assertions.assertEquals("AD", matches.getPlayer1().getScore());
+        Assertions.assertEquals(0, matches.getPlayer1().getGamesWon());
     }
 
     @Test
