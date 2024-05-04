@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.dto.MatchesDTO;
+import ru.dragomirov.dto.MatchDTO;
 import ru.dragomirov.services.MatchScoreCalculationService;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class MatchScoreServlet extends HttpServlet {
             }
 
             // Используем matchId для поиска соответствующего матча
-            MatchesDTO match = (MatchesDTO) req.getSession().getAttribute("match");
+            MatchDTO match = (MatchDTO) req.getSession().getAttribute("match");
 
             if (match == null || match.getId() != matchId) {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -82,7 +82,7 @@ public class MatchScoreServlet extends HttpServlet {
             }
 
             // Получаем объект матча из сессии
-            MatchesDTO match = (MatchesDTO) req.getSession().getAttribute("match");
+            MatchDTO match = (MatchDTO) req.getSession().getAttribute("match");
 
             if (match == null || match.getId() != matchId) {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);

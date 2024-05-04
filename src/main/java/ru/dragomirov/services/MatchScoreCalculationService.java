@@ -1,7 +1,7 @@
 package ru.dragomirov.services;
 
-import ru.dragomirov.dto.MatchesDTO;
-import ru.dragomirov.dto.PlayersDTO;
+import ru.dragomirov.dto.MatchDTO;
+import ru.dragomirov.dto.PlayerDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,8 @@ import java.util.function.BiConsumer;
  * MatchScoreCalculationService реализует логику подсчёта счёта матча по очкам/геймам/сетам
  */
 public class MatchScoreCalculationService {
-    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService;
-    private final Map<String, BiConsumer<PlayersDTO, PlayersDTO>> scoreHandlers = new HashMap<>();
+    private final FinishedMatchPersistenceService finishedMatchPersistenceService;
+    private final Map<String, BiConsumer<PlayerDTO, PlayerDTO>> scoreHandlers = new HashMap<>();
 
     {
         scoreHandlers.put("40:30", this::winGameAndReset);
@@ -25,10 +25,10 @@ public class MatchScoreCalculationService {
     }
 
     public MatchScoreCalculationService() {
-        this.finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
+        this.finishedMatchPersistenceService = new FinishedMatchPersistenceService();
     }
 
-    public void addPointsToPlayers(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
+    public void addPointsToPlayers(MatchDTO match, PlayerDTO player, PlayerDTO opponent) {
         if (player.getGamesWon() == 6 && opponent.getGamesWon() == 6) {
             handleTieBreak(match, player, opponent);
             return;
@@ -40,16 +40,16 @@ public class MatchScoreCalculationService {
         } else {
             addPoint(player);
         } if (player.getSet() == 3) {
-            finishedMatchesPersistenceService.handleSetWin(match, player, opponent);
+            finishedMatchPersistenceService.handleSetWin(match, player, opponent);
         }
     }
 
-    private void winGameAndReset(PlayersDTO player, PlayersDTO opponent) {
+    private void winGameAndReset(PlayerDTO player, PlayerDTO opponent) {
         winGame(player, opponent);
         resetScoreAfterWinning(player, opponent);
     }
 
-    private void winGame(PlayersDTO player, PlayersDTO opponent) {
+    private void winGame(PlayerDTO player, PlayerDTO opponent) {
         player.setGamesWon(getNextGameCount(player.getGamesWon()));
         if (player.getGamesWon() >= 6 && (player.getGamesWon() - opponent.getGamesWon() >= 2)) {
             player.setSet(player.getSet() + 1);
@@ -57,7 +57,7 @@ public class MatchScoreCalculationService {
         }
     }
 
-    private void handleDeuce(PlayersDTO player, PlayersDTO opponent) {
+    private void handleDeuce(PlayerDTO player, PlayerDTO opponent) {
         if (player.getScore().equals("AD")) {
             winGame(player, opponent);
             resetScoreAfterWinning(player, opponent);
@@ -69,18 +69,18 @@ public class MatchScoreCalculationService {
         }
     }
 
-    private void handleTieBreak(MatchesDTO match, PlayersDTO player, PlayersDTO opponent) {
+    private void handleTieBreak(MatchDTO match, PlayerDTO player, PlayerDTO opponent) {
         player.setScore(String.valueOf(Integer.parseInt(player.getScore()) + 1));
         if (Integer.parseInt(player.getScore()) >= 7 &&
                 (Integer.parseInt(player.getScore()) - Integer.parseInt(opponent.getScore()) >= 2)) {
             player.setSet(player.getSet() + 1);
             resetGamesAfterWinning(player, opponent);
             resetScoreAfterWinning(player, opponent);
-            finishedMatchesPersistenceService.handleSetWin(match, player, opponent);
+            finishedMatchPersistenceService.handleSetWin(match, player, opponent);
         }
     }
 
-    private void addPoint(PlayersDTO player) {
+    private void addPoint(PlayerDTO player) {
         String additionalPoints = getNextPoint(player.getScore());
         player.setScore(additionalPoints);
     }
@@ -101,12 +101,12 @@ public class MatchScoreCalculationService {
         return countScore + 1;
     }
 
-    private void resetScoreAfterWinning(PlayersDTO player, PlayersDTO opponent) {
+    private void resetScoreAfterWinning(PlayerDTO player, PlayerDTO opponent) {
         player.setScore("0");
         opponent.setScore("0");
     }
 
-    private void resetGamesAfterWinning(PlayersDTO player, PlayersDTO opponent) {
+    private void resetGamesAfterWinning(PlayerDTO player, PlayerDTO opponent) {
         player.setGamesWon(0);
         opponent.setGamesWon(0);
     }

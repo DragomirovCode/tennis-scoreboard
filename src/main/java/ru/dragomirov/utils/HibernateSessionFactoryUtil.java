@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.dragomirov.entities.Matches;
-import ru.dragomirov.entities.Players;
+import ru.dragomirov.entities.Match;
+import ru.dragomirov.entities.Player;
 
 /**
  * HibernateSessionFactoryUtil используется для создания и управления сессиями Hibernate.
@@ -35,8 +35,8 @@ public class HibernateSessionFactoryUtil {
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
             configuration.setProperty("hibernate.show_sql", "true");
             configuration.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-            configuration.addAnnotatedClass(Players.class);
-            configuration.addAnnotatedClass(Matches.class);
+            configuration.addAnnotatedClass(Player.class);
+            configuration.addAnnotatedClass(Match.class);
 
             // Использование источника данных HikariCP вместо стандартного подключения Hibernate
             configuration.getProperties().put("hibernate.connection.datasource", dataSource);

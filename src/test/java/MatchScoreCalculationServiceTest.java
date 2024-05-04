@@ -1,29 +1,29 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.dragomirov.dto.MatchesDTO;
-import ru.dragomirov.dto.MatchesDTOFactory;
-import ru.dragomirov.dto.PlayersDTO;
-import ru.dragomirov.dto.PlayersDTOFactory;
+import ru.dragomirov.dto.MatchDTO;
+import ru.dragomirov.dto.MatchDTOFactory;
+import ru.dragomirov.dto.PlayerDTO;
+import ru.dragomirov.dto.PlayerDTOFactory;
 import ru.dragomirov.services.MatchScoreCalculationService;
 
 public class MatchScoreCalculationServiceTest {
-    private MatchesDTO setupMatch(String playerScore, int playerGamesWon, int playerSet,
-                                  String opponentScore, int opponentGamesWon, int opponentSet) {
-        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
-        PlayersDTO player = playersDTOFactory.createPlayers("player", playerScore);
+    private MatchDTO setupMatch(String playerScore, int playerGamesWon, int playerSet,
+                                String opponentScore, int opponentGamesWon, int opponentSet) {
+        PlayerDTOFactory playerDTOFactory = new PlayerDTOFactory();
+        PlayerDTO player = playerDTOFactory.createPlayers("player", playerScore);
         player.setGamesWon(playerGamesWon);
         player.setSet(playerSet);
-        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", opponentScore);
+        PlayerDTO opponent = playerDTOFactory.createPlayers("opponent", opponentScore);
         opponent.setGamesWon(opponentGamesWon);
         opponent.setSet(opponentSet);
 
-        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
-        return matchesDTOFactory.createMatches(player, opponent);
+        MatchDTOFactory matchDTOFactory = new MatchDTOFactory();
+        return matchDTOFactory.createMatches(player, opponent);
     }
 
     @Test
     public void shouldContinueGameAfterDeuce(){
-        MatchesDTO matches = setupMatch("40", 0, 0,
+        MatchDTO matches = setupMatch("40", 0, 0,
                 "40", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -40,7 +40,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldWinGameAfterFortyLove(){
-        MatchesDTO matches = setupMatch("40", 0, 0,
+        MatchDTO matches = setupMatch("40", 0, 0,
                 "0", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -57,7 +57,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldStartTiebreakAtSixAll(){
-        MatchesDTO matches = setupMatch("0", 6, 0,
+        MatchDTO matches = setupMatch("0", 6, 0,
                 "0", 6, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -74,7 +74,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldStartNewSetAfterEightSix(){
-        MatchesDTO matches = setupMatch("7", 6, 0,
+        MatchDTO matches = setupMatch("7", 6, 0,
                 "6", 6, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -91,7 +91,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldWinGameAfterAdvantage(){
-        MatchesDTO matches = setupMatch("AD", 0, 0,
+        MatchDTO matches = setupMatch("AD", 0, 0,
                 "40", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -108,7 +108,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldReturnToDeuceAfterPlayerScores(){
-        MatchesDTO matches = setupMatch("40", 0, 0,
+        MatchDTO matches = setupMatch("40", 0, 0,
                 "AD", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
@@ -125,7 +125,7 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldPlayUntilThreeSets(){
-        MatchesDTO matches = setupMatch("40", 6, 2,
+        MatchDTO matches = setupMatch("40", 6, 2,
                 "0", 6, 2);
         MatchScoreCalculationService service = new MatchScoreCalculationService();
         service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());

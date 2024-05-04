@@ -5,23 +5,23 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.dragomirov.entities.Matches;
-import ru.dragomirov.services.MatchesDisplayService;
+import ru.dragomirov.entities.Match;
+import ru.dragomirov.services.MatchDisplayService;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * MatchesDisplayServlet используется для отображения списка матчей,
+ * MatchDisplayServlet используется для отображения списка матчей,
  * включая их идентификатор, имена игроков и победителя.
  */
-@WebServlet(name = "MatchesDisplayServlet", urlPatterns = "/matches")
-public class MatchesDisplayServlet extends HttpServlet {
-    private MatchesDisplayService matchesDisplayService;
+@WebServlet(name = "MatchDisplayServlet", urlPatterns = "/matches")
+public class MatchDisplayServlet extends HttpServlet {
+    private MatchDisplayService matchDisplayService;
 
     @Override
     public void init() {
-        this.matchesDisplayService = new MatchesDisplayService();
+        this.matchDisplayService = new MatchDisplayService();
     }
 
     @Override
@@ -31,11 +31,11 @@ public class MatchesDisplayServlet extends HttpServlet {
 
             int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
 
-            List<Matches> matches = matchesDisplayService.getMatches(playerName, page);
+            List<Match> matches = matchDisplayService.getMatches(playerName, page);
 
-            long totalMatches = matchesDisplayService.getTotalMatches(playerName);
+            long totalMatches = matchDisplayService.getTotalMatches(playerName);
 
-            boolean hasNextPage = matchesDisplayService.hasNextPage(page, totalMatches);
+            boolean hasNextPage = matchDisplayService.hasNextPage(page, totalMatches);
 
             req.setAttribute("matches", matches);
             req.setAttribute("currentPage", page);

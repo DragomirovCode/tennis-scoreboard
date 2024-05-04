@@ -1,30 +1,30 @@
 package ru.dragomirov.dao;
 
+import ru.dragomirov.entities.Player;
 import ru.dragomirov.utils.HibernateSessionManagerUtil;
-import ru.dragomirov.entities.Players;
 
 import java.util.List;
 import java.util.Optional;
 
-public class HibernatePlayersDAO implements CrudDAO<Players, Integer> {
+public class HibernatePlayerDAO implements CrudDAO<Player, Integer> {
 
     @Override
-    public Optional<Players> findById(Integer integer) {
+    public Optional<Player> findById(Integer integer) {
         return Optional.empty();
     }
 
     @Override
-    public List<Players> findAll() {
+    public List<Player> findAll() {
         return null;
     }
 
     @Override
-    public void save(Players entity) {
+    public void save(Player entity) {
         HibernateSessionManagerUtil.performTransaction(session -> session.save(entity));
     }
 
     @Override
-    public Optional<Players> update(Players entity) {
+    public Optional<Player> update(Player entity) {
         return Optional.empty();
     }
 

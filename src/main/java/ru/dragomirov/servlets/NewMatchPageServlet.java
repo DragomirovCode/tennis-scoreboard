@@ -5,10 +5,10 @@
     import jakarta.servlet.http.HttpServlet;
     import jakarta.servlet.http.HttpServletRequest;
     import jakarta.servlet.http.HttpServletResponse;
-    import ru.dragomirov.dto.MatchesDTOFactory;
-    import ru.dragomirov.dto.MatchesDTO;
-    import ru.dragomirov.dto.PlayersDTO;
-    import ru.dragomirov.dto.PlayersDTOFactory;
+    import ru.dragomirov.dto.MatchDTOFactory;
+    import ru.dragomirov.dto.MatchDTO;
+    import ru.dragomirov.dto.PlayerDTO;
+    import ru.dragomirov.dto.PlayerDTOFactory;
     
     import java.io.IOException;
 
@@ -18,13 +18,13 @@
      */
     @WebServlet(name = "NewMatchPageServlet", urlPatterns = "/new-match")
     public class NewMatchPageServlet extends HttpServlet {
-        private MatchesDTOFactory matchesDTOFactory;
-        private PlayersDTOFactory playersDTOFactory;
+        private MatchDTOFactory matchDTOFactory;
+        private PlayerDTOFactory playerDTOFactory;
     
         @Override
         public void init() {
-            this.matchesDTOFactory = new MatchesDTOFactory();
-            this.playersDTOFactory = new PlayersDTOFactory();
+            this.matchDTOFactory = new MatchDTOFactory();
+            this.playerDTOFactory = new PlayerDTOFactory();
         }
     
         @Override
@@ -49,11 +49,11 @@
                     return;
                 }
     
-                PlayersDTO player1DTO = playersDTOFactory.createPlayers(player1Name, "0");
+                PlayerDTO player1DTO = playerDTOFactory.createPlayers(player1Name, "0");
     
-                PlayersDTO player2DTO = playersDTOFactory.createPlayers(player2Name, "0");
+                PlayerDTO player2DTO = playerDTOFactory.createPlayers(player2Name, "0");
     
-                MatchesDTO match = matchesDTOFactory.createMatches(player1DTO, player2DTO);
+                MatchDTO match = matchDTOFactory.createMatches(player1DTO, player2DTO);
 
                 req.getSession().setAttribute("match", match);
 

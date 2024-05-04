@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.List, ru.dragomirov.entities.Matches" %>
+<%@ page import="java.util.List, ru.dragomirov.entities.Match" %>
+<%@ page import="ru.dragomirov.entities.Match" %>
 
 <html>
 <head>
@@ -35,12 +36,12 @@
     </tr>
 
     <%
-        List<Matches> matches = (List<Matches>) request.getAttribute("matches");
+        List<Match> matches = (List<Match>) request.getAttribute("matches");
         int currentPage = (int) request.getAttribute("currentPage");
         boolean hasNextPage = (boolean) request.getAttribute("hasNextPage");
         String playerName = (String) request.getAttribute("playerName");
         if (matches != null && !matches.isEmpty()) {
-            for (Matches match : matches) {
+            for (Match match : matches) {
     %>
     <tr>
         <td><%= match.getId() %></td>
