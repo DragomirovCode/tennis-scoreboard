@@ -91,4 +91,14 @@ public class MatchScoreCalculationServiceTest {
         Assertions.assertEquals("40", matches.getPlayer1().getScore());
         Assertions.assertEquals("40", matches.getPlayer2().getScore());
     }
+
+    @Test
+    public void shouldPlayUntilThreeSets(){
+        MatchesDTO matches = setupMatch("40", 6, 2,
+                "0", 6, 2);
+        MatchScoreCalculationService service = new MatchScoreCalculationService();
+        service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
+
+        Assertions.assertEquals("player", matches.getWinner().getName());
+    }
 }
