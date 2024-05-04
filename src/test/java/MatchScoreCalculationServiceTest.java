@@ -20,6 +20,7 @@ public class MatchScoreCalculationServiceTest {
         service.addPointsToPlayers(matches, player, opponent);
 
         Assertions.assertEquals("AD", player.getScore());
+        Assertions.assertEquals(0, player.getGamesWon());
     }
 
     @Test
