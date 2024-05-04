@@ -89,4 +89,20 @@ public class MatchScoreCalculationServiceTest {
         Assertions.assertEquals(1, player.getGamesWon());
         Assertions.assertEquals("0", player.getScore());
     }
+
+    @Test
+    public void shouldReturnToDeuceAfterPlayerScores(){
+        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
+        PlayersDTO player = playersDTOFactory.createPlayers("player", "40");
+        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "AD");
+
+        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
+        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+
+        MatchScoreCalculationService service = new MatchScoreCalculationService();
+        service.addPointsToPlayers(matches, player, opponent);
+
+        Assertions.assertEquals("40", player.getScore());
+        Assertions.assertEquals("40", opponent.getScore());
+    }
 }
