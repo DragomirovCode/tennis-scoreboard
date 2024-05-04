@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class MatchesDisplayService {
     private final HibernateMatchesDAO hibernateMatchesDAO;
-    private static final int PAGE_SIZE = 1;
+    private static final int PAGE_SIZE = 5;
 
     public MatchesDisplayService() {
         this.hibernateMatchesDAO = new HibernateMatchesDAO();
@@ -33,6 +33,6 @@ public class MatchesDisplayService {
     }
 
     public boolean hasNextPage(int page, long totalMatches) {
-        return page * PAGE_SIZE < totalMatches;
+        return (long) page * PAGE_SIZE < totalMatches;
     }
 }
