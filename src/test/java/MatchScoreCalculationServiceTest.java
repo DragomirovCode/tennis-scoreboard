@@ -97,8 +97,13 @@ public class MatchScoreCalculationServiceTest {
         MatchScoreCalculationService service = new MatchScoreCalculationService();
         service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
 
-        Assertions.assertEquals(1, matches.getPlayer1().getGamesWon());
         Assertions.assertEquals("0", matches.getPlayer1().getScore());
+        Assertions.assertEquals(1, matches.getPlayer1().getGamesWon());
+        Assertions.assertEquals(0, matches.getPlayer1().getSet());
+
+        Assertions.assertEquals("0", matches.getPlayer2().getScore());
+        Assertions.assertEquals(0, matches.getPlayer2().getGamesWon());
+        Assertions.assertEquals(0, matches.getPlayer2().getSet());
     }
 
     @Test
