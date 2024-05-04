@@ -82,17 +82,13 @@ public class MatchScoreCalculationServiceTest {
 
     @Test
     public void shouldReturnToDeuceAfterPlayerScores(){
-        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
-        PlayersDTO player = playersDTOFactory.createPlayers("player", "40");
-        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "AD");
-
-        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
-        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+        MatchesDTO matches = setupMatch("40", 0, 0,
+                "AD", 0, 0);
 
         MatchScoreCalculationService service = new MatchScoreCalculationService();
-        service.addPointsToPlayers(matches, player, opponent);
+        service.addPointsToPlayers(matches, matches.getPlayer1(), matches.getPlayer2());
 
-        Assertions.assertEquals("40", player.getScore());
-        Assertions.assertEquals("40", opponent.getScore());
+        Assertions.assertEquals("40", matches.getPlayer1().getScore());
+        Assertions.assertEquals("40", matches.getPlayer2().getScore());
     }
 }
