@@ -63,7 +63,7 @@ public class MatchScoreCalculationService {
             resetScoreAfterWinning(player, opponent);
         } else if (opponent.getScore().equals("AD")) {
             opponent.setScore("40");
-            player.setScore("AD");
+            player.setScore("40");
         } else {
             player.setScore("AD");
         }
