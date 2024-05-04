@@ -1,9 +1,8 @@
-package ru.dragomirov.commons;
+package ru.dragomirov.utils;
 import org.hibernate.Session;
-import ru.dragomirov.utils.HibernateSessionFactoryUtil;
 
 /**
- * HibernateSessionManager используется для управления сессиями Hibernate.
+ * HibernateSessionManagerUtil используется для управления сессиями Hibernate.
  * Он предоставляет функциональные интерфейсы и методы для выполнения запросов к базе данных и транзакций.
  *
  * @SessionQuery<T> используется для выполнения операции с сеансом Hibernate и возвращает результат типа T.
@@ -17,7 +16,7 @@ import ru.dragomirov.utils.HibernateSessionFactoryUtil;
  * используется для выполнения транзакции с использованием сеанса Hibernate.
  * Он начинает транзакцию, выполняет операцию и затем фиксирует транзакцию.
  */
-public class HibernateSessionManager {
+public class HibernateSessionManagerUtil {
     public interface SessionQuery<T> {
         T execute(Session session);
     }

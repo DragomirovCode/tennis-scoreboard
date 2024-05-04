@@ -1,6 +1,6 @@
 package ru.dragomirov.dao;
 
-import ru.dragomirov.commons.HibernateSessionManager;
+import ru.dragomirov.utils.HibernateSessionManagerUtil;
 import ru.dragomirov.entities.Matches;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Optional;
 public class HibernateMatchesDAO implements MatchesDAO {
     @Override
     public List<Matches> findAll(int page, int pageSize) {
-        return HibernateSessionManager.performSessionQuery(session -> session.createQuery("FROM Matches", Matches.class)
+        return HibernateSessionManagerUtil.performSessionQuery(session -> session.createQuery("FROM Matches", Matches.class)
                         .setFirstResult((page - 1) * pageSize)
                         .setMaxResults(pageSize)
                         .list(),
@@ -18,7 +18,7 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public List<Matches> findMatchesByPlayerName(String name, int page, int pageSize) {
-        return HibernateSessionManager.performSessionQuery(session ->
+        return HibernateSessionManagerUtil.performSessionQuery(session ->
                         session.createQuery(
                                         "FROM Matches m WHERE m.player1.name = :name OR m.player2.name = :name", Matches.class)
                                 .setParameter("name", name)
@@ -31,7 +31,7 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public long countMatches() {
-        return (long) HibernateSessionManager.performSessionQuery(session ->
+        return (long) HibernateSessionManagerUtil.performSessionQuery(session ->
                 session.createQuery(
                         "SELECT COUNT(m) FROM Matches m"
                 )
@@ -42,7 +42,7 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public long countMatchesByPlayerName(String playerName) {
-        return (long) HibernateSessionManager.performSessionQuery(session ->
+        return (long) HibernateSessionManagerUtil.performSessionQuery(session ->
                 session.createQuery(
                         "SELECT COUNT(m) FROM Matches m WHERE m.player1.name = :name OR m.player2.name = :name")
                         .setParameter("name", playerName)
@@ -53,7 +53,7 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public Optional<Matches> findById(Integer id) {
-        return Optional.ofNullable(HibernateSessionManager.performSessionQuery(session -> session.get(Matches.class, id),
+        return Optional.ofNullable(HibernateSessionManagerUtil.performSessionQuery(session -> session.get(Matches.class, id),
                 "Произошла ошибка при выполнении метода 'findById'"));
     }
 
@@ -64,7 +64,7 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public void save(Matches entity) {
-        HibernateSessionManager.performTransaction(session -> session.save(entity));
+        HibernateSessionManagerUtil.performTransaction(session -> session.save(entity));
     }
 
     @Override
@@ -74,6 +74,6 @@ public class HibernateMatchesDAO implements MatchesDAO {
 
     @Override
     public void delete(Integer integer) {
-        HibernateSessionManager.performTransaction(session -> session.delete(integer));
+        HibernateSessionManagerUtil.performTransaction(session -> session.delete(integer));
     }
 }

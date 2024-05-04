@@ -1,6 +1,6 @@
 package ru.dragomirov.dao;
 
-import ru.dragomirov.commons.HibernateSessionManager;
+import ru.dragomirov.utils.HibernateSessionManagerUtil;
 import ru.dragomirov.entities.Players;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class HibernatePlayersDAO implements CrudDAO<Players, Integer> {
 
     @Override
     public void save(Players entity) {
-        HibernateSessionManager.performTransaction(session -> session.save(entity));
+        HibernateSessionManagerUtil.performTransaction(session -> session.save(entity));
     }
 
     @Override
