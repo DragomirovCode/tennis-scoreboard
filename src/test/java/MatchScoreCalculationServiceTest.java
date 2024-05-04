@@ -21,4 +21,19 @@ public class MatchScoreCalculationServiceTest {
 
         Assertions.assertEquals("AD", player.getScore());
     }
+
+    @Test
+    public void shouldWinGameAfterFortyLove(){
+        PlayersDTOFactory playersDTOFactory = new PlayersDTOFactory();
+        PlayersDTO player = playersDTOFactory.createPlayers("player", "40");
+        PlayersDTO opponent = playersDTOFactory.createPlayers("opponent", "0");
+
+        MatchesDTOFactory matchesDTOFactory = new MatchesDTOFactory();
+        MatchesDTO matches = matchesDTOFactory.createMatches(player, opponent);
+
+        MatchScoreCalculationService service = new MatchScoreCalculationService();
+        service.addPointsToPlayers(matches, player, opponent);
+
+        Assertions.assertEquals(1, player.getGamesWon());
+    }
 }
